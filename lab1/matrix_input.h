@@ -1,0 +1,4 @@
+#ifndef LAB1_MATRIX_INPUT_H
+#define LAB1_MATRIX_INPUT_H
+
+#endif //LAB1_MATRIX_INPUT_H
