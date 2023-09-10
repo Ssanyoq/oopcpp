@@ -32,19 +32,19 @@ Matrix<T> inputMatrix() {
     Matrix<T> matrix(width, height);
     while (true) {
         try {
-            cout << "Input x(-1 to stop): ";
-            long long x = getNum<long long>(-1, width - 1);
-            if (x == -1) {
-                break;
-            }
-            cout << "Input y(-1 to stop): ";
+            cout << "Input row number(-1 to stop): ";
             long long y = getNum<long long>(-1, height - 1);
             if (y == -1) {
                 break;
             }
+            cout << "Input column number(-1 to stop): ";
+            long long x = getNum<long long>(-1, width - 1);
+            if (x == -1) {
+                break;
+            }
             cout << "Input value: ";
             T val = getNum<T>();
-            matrix.setValue(x, y, val);
+            matrix.setValue(y, x, val);
             cout << "Value is set" << endl;
         } catch (std::runtime_error &e) {
             std::cin.clear();

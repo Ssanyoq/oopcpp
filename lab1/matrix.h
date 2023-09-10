@@ -26,34 +26,10 @@ private:
 public:
     const std::size_t height;
     const std::size_t width;
+
     Matrix(std::size_t colsNum, std::size_t rowsNum) : width(colsNum), height(rowsNum),
                                                        lines(std::map<std::size_t, std::map<std::size_t, T> >()) {
     };
-
-    std::size_t getNonZeroWidth(std::size_t row) {
-        if (lines.find(row) == std::end(lines)) {
-            return 0;
-        } else {
-            return lines.at(row).size();
-        }
-    }
-
-    std::size_t getNonZeroHeight() {
-        return lines.size();
-    }
-
-    std::vector<T> getNonZeroRow(std::size_t row) {
-        if (lines.find(row) == std::end(lines)) {
-            return std::vector<T>(0);
-        }
-        std::vector<T> out(lines[row].size());
-        int i = 0;
-        for (typename std::map<std::size_t, T>::iterator it = lines[row].begin(); it < lines[row].end(); it++) {
-            out[i] = it->second;
-            i++;
-        }
-        return out;
-    }
 
     /**
      * Value setter for the matrix
@@ -115,11 +91,11 @@ public:
 //    }
 };
 
-template <typename T>
+template<typename T>
 void printMatrix(Matrix<T> &matrix) {
     cout << "Matrix " << matrix.height << "x" << matrix.width << endl;
     for (int i = 0; i < matrix.height; i++) {
-        for (int j = 0; j < matrix.width; j++ ){
+        for (int j = 0; j < matrix.width; j++) {
             cout << matrix.getValue(i, j);
             if (j != matrix.width - 1) {
                 cout << " ";
