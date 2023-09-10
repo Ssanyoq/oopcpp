@@ -10,6 +10,10 @@
 #include <stdexcept>
 #include <map>
 
+using std::cout;
+using std::cin;
+using std::endl;
+
 /**
  * Universal Matrix class
  * @tparam T - any type that can be printed out
@@ -17,20 +21,13 @@
 template<typename T>
 class Matrix {
 private:
-    const std::size_t height;
-    const std::size_t width;
+
     std::map<std::size_t, std::map<std::size_t, T> > lines;
 public:
+    const std::size_t height;
+    const std::size_t width;
     Matrix(std::size_t colsNum, std::size_t rowsNum) : width(colsNum), height(rowsNum),
                                                        lines(std::map<std::size_t, std::map<std::size_t, T> >()) {
-    };
-
-    std::size_t getHeight() {
-        return height;
-    };
-
-    std::size_t getWidth() {
-        return width;
     };
 
     std::size_t getNonZeroWidth(std::size_t row) {
@@ -67,12 +64,18 @@ public:
      */
     void setValue(std::size_t i, std::size_t j, const T value) {
         if (i < height && j < width) {
+            if (value == NULL) {
+                if (getValue(i, j) != NULL) {
+                    lines[i][j] = value;
+                    return;
+                }
+            }
             if (lines.find(i) == std::end(lines)) {
                 lines[i] = std::map<std::size_t, T>();
             }
             lines[i][j] = value;
         } else {
-            throw std::invalid_argument("Indices are out of bounds");
+            throw std::range_error("Indices are out of bounds");
         }
     }
 
@@ -90,37 +93,40 @@ public:
                 return 0;
             }
         } else {
-            throw std::invalid_argument("Indices are out of bounds");
+            throw std::range_error("Indices are out of bounds");
         }
     }
 
-    /**
-     * Overloading << operator for correct printing of the Matrix
-     */
-    friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix) {
-        os << "Matrix " << matrix.width << "x" << matrix.height << std::endl;
-        for (int i = 0; i < matrix.height; ++i) {
-            if (matrix.lines.find(i) == std::end(matrix.lines)) {
-                for (int j = 0; i < matrix.width; i++) {
-                    std::cout << "0";
-                    if (i != matrix.width - 1) {
-                        std::cout << " ";
-                    }
-                }
-            } else {
-                for (int j = 0; j < matrix.width; ++j) {
-                    if (matrix.lines.at(i).find(j) != std::end(matrix.lines.at(i))) {
-                        os << matrix.lines.at(i).at(j);
-                    } else {
-                        os << 0;
-                    }
-                    os << " ";
-                }
-            }
-            os << std::endl;
-        }
-        return os;
-    }
+//    /**
+//     * Overloading << operator for correct printing of the Matrix
+//     */
+//    friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix) {
+//        os << "Matrix " << matrix.width << "x" << matrix.height << std::endl;
+//        for (int i = 0; i < matrix.height; ++i) {
+//            for (int j = 0; j < matrix.width; j++) {
+//                os << matrix.getValue(i, j);
+//                if (j != matrix.width) {
+//                    os << " ";
+//                }
+//            }
+//            os << std::endl;
+//        }
+//        return os;
+//    }
 };
+
+template <typename T>
+void printMatrix(Matrix<T> &matrix) {
+    cout << "Matrix " << matrix.height << "x" << matrix.width << endl;
+    for (int i = 0; i < matrix.height; i++) {
+        for (int j = 0; j < matrix.width; j++ ){
+            cout << matrix.getValue(i, j);
+            if (j != matrix.width - 1) {
+                cout << " ";
+            }
+        }
+        cout << endl;
+    }
+}
 
 #endif
