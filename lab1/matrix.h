@@ -9,6 +9,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <map>
+#include <unordered_map>
 
 using std::cout;
 using std::cin;
@@ -23,13 +24,13 @@ namespace MatrixSpace {
     class Matrix {
     private:
 
-        std::map<std::size_t, std::map<std::size_t, T> > lines;
+        std::unordered_map<std::size_t, std::unordered_map<std::size_t, T> > lines;
     public:
         const std::size_t height;
         const std::size_t width;
 
         Matrix(std::size_t colsNum, std::size_t rowsNum) : width(colsNum), height(rowsNum),
-                                                           lines(std::map<std::size_t, std::map<std::size_t, T> >()) {
+                                                           lines(std::unordered_map<std::size_t, std::unordered_map<std::size_t, T> >()) {
         };
 
         /**
@@ -43,12 +44,15 @@ namespace MatrixSpace {
             if (i < height && j < width) {
                 if (value == NULL) {
                     if (getValue(i, j) != NULL) {
-                        lines[i][j] = value;
+                        lines[i].erase(j);
+                        if (lines[i].size() == 0) {
+                            lines.erase(i);
+                        }
                         return;
                     }
                 }
                 if (lines.find(i) == std::end(lines)) {
-                    lines[i] = std::map<std::size_t, T>();
+                    lines[i] = std::unordered_map<std::size_t, T>();
                 }
                 lines[i][j] = value;
             } else {
@@ -62,10 +66,10 @@ namespace MatrixSpace {
          * @param j column index
          * @throws std::invalid_argument if i or j are out of bounds
          */
-        T getValue(std::size_t i, std::size_t j) {
+        T getValue(std::size_t i, std::size_t j) const {
             if (i < height && j < width) {
-                if (lines[i].find(j) != std::end(lines[i])) {
-                    return lines[i].at(j);
+                if (lines.at(i).find(j) != std::end(lines.at(i))) {
+                    return lines.at(i).at(j);
                 } else {
                     return 0;
                 }

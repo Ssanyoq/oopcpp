@@ -28,8 +28,13 @@ namespace MatrixSpace {
     template<typename T>
     Matrix<T> inputMatrix() {
         cout << "Input width and height of the matrix, ^D to stop: ";
-        std::size_t width = getNum<std::size_t>();
-        std::size_t height = getNum<std::size_t>();
+        std::size_t width, height;
+        try {
+            width = getNum<std::size_t>();
+            height = getNum<std::size_t>();
+        } catch (std::runtime_error &e) {
+            return Matrix<T>(0, 0);
+        }
         Matrix<T> matrix(width, height);
         while (true) {
             try {
@@ -48,8 +53,6 @@ namespace MatrixSpace {
                 matrix.setValue(y, x, val);
                 cout << "Value is set" << endl;
             } catch (std::runtime_error &e) {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 return matrix;
             }
         }
