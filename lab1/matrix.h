@@ -16,6 +16,14 @@ using std::cin;
 using std::endl;
 
 namespace MatrixSpace {
+    template<typename T>
+    class Matrix;
+}
+
+template <typename T>
+std::ostream &operator<< (std::ostream &os, const MatrixSpace::Matrix<T> &matrix);
+
+namespace MatrixSpace {
 /**
  * Universal Matrix class
  * @tparam T - any type that can be printed out
@@ -78,36 +86,39 @@ namespace MatrixSpace {
             }
         }
 
-//    /**
-//     * Overloading << operator for correct printing of the Matrix
-//     */
-//    friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix) {
-//        os << "Matrix " << matrix.width << "x" << matrix.height << std::endl;
-//        for (int i = 0; i < matrix.height; ++i) {
+    /**
+     * Overloading << operator for correct printing of the Matrix
+     */
+    friend std::ostream &operator<< <>(std::ostream &os, const Matrix<T> &matrix);
+    };
+//
+//    template<typename T>
+//    void printMatrix(Matrix<T> &matrix) {
+//        cout << "Matrix " << matrix.height << "x" << matrix.width << endl;
+//        for (int i = 0; i < matrix.height; i++) {
 //            for (int j = 0; j < matrix.width; j++) {
-//                os << matrix.getValue(i, j);
-//                if (j != matrix.width) {
-//                    os << " ";
+//                cout << matrix.getValue(i, j);
+//                if (j != matrix.width - 1) {
+//                    cout << " ";
 //                }
 //            }
-//            os << std::endl;
+//            cout << endl;
 //        }
-//        return os;
 //    }
-    };
+}
 
-    template<typename T>
-    void printMatrix(Matrix<T> &matrix) {
-        cout << "Matrix " << matrix.height << "x" << matrix.width << endl;
-        for (int i = 0; i < matrix.height; i++) {
-            for (int j = 0; j < matrix.width; j++) {
-                cout << matrix.getValue(i, j);
-                if (j != matrix.width - 1) {
-                    cout << " ";
-                }
+template< typename T>
+std::ostream &operator<< (std::ostream &os, const MatrixSpace::Matrix<T> &matrix) {
+    os << "Matrix " << matrix.width << "x" << matrix.height << std::endl;
+    for (int i = 0; i < matrix.height; ++i) {
+        for (int j = 0; j < matrix.width; j++) {
+            os << matrix.getValue(i, j);
+            if (j != matrix.width) {
+                os << " ";
             }
-            cout << endl;
         }
+        os << std::endl;
     }
+    return os;
 }
 #endif

@@ -12,7 +12,8 @@ bool criteria(int element) {
 
 int main() {
     auto matrix = inputMatrix<DATA_TYPE>();
-    printMatrix(matrix);
+    cout << matrix;
+//    printMatrix(matrix);
     cout << endl;
     printVector(makeVector(matrix, criteria));
 }
