@@ -6,6 +6,9 @@
 
 using namespace MatrixSpace;
 
+bool criteria(int element) {
+    return element > 10;
+}
 
 int main() {
     auto matrix = inputMatrix<DATA_TYPE>();
