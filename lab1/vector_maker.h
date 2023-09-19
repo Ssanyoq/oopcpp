@@ -21,7 +21,7 @@ namespace MatrixSpace {
     }
 
     template<typename T>
-    std::vector<T> makeVector(const  Matrix<T> &matrix, bool(*criteria)(T)) {
+    std::vector<T> makeVector(const Matrix<T> &matrix, bool(*criteria)(T)) {
         std::vector<T> vector(matrix.height);
         for (int i = 0; i < matrix.height; i++) {
             for (int j = 0; j < matrix.width; j++) {

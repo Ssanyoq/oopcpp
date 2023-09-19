@@ -50,8 +50,8 @@ namespace MatrixSpace {
          */
         void setValue(std::size_t i, std::size_t j, const T value) {
             if (i < height && j < width) {
-                if (value == NULL) {
-                    if (getValue(i, j) != NULL) {
+                if (value == 0) {
+                    if (getValue(i, j) != 0) {
                         lines[i].erase(j);
                         if (lines[i].size() == 0) {
                             lines.erase(i);
@@ -59,7 +59,7 @@ namespace MatrixSpace {
                         return;
                     }
                 }
-                if (lines.find(i) == std::end(lines)) {
+                if (lines.find(i) == lines.end()) {
                     lines[i] = std::unordered_map<std::size_t, T>();
                 }
                 lines[i][j] = value;
@@ -76,7 +76,10 @@ namespace MatrixSpace {
          */
         T getValue(std::size_t i, std::size_t j) const {
             if (i < height && j < width) {
-                if (lines.at(i).find(j) != std::end(lines.at(i))) {
+                if (lines.find(i) == lines.end()) {
+                    return 0;
+                }
+                if (lines.at(i).find(j) != lines.at(i).end()) {
                     return lines.at(i).at(j);
                 } else {
                     return 0;
@@ -91,7 +94,7 @@ namespace MatrixSpace {
      */
     friend std::ostream &operator<< <>(std::ostream &os, const Matrix<T> &matrix);
     };
-//
+
 //    template<typename T>
 //    void printMatrix(Matrix<T> &matrix) {
 //        cout << "Matrix " << matrix.height << "x" << matrix.width << endl;
