@@ -6,17 +6,18 @@
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
+#include <string>
 
 using std::vector;
 using std::pow;
 using std::cout;
 using std::endl;
+using std::string;
 
-void printUint8_t(uint8_t num);
+class Octet {
 
-uint8_t dpow(int base, unsigned int exponent);
+};
 
-class Octet;
 
 
 

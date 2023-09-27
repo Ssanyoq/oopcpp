@@ -1,17 +1,5 @@
 #include "octet.h"
 
-void printUint8_t(uint8_t num) {
-    printf("%hu\n", num);
-}
-
-uint8_t dpow(int base, unsigned int exponent) {
-    uint8_t out = 1;
-    for (int i = 0; i < exponent; i++) {
-        out *= base;
-    }
-    return out;
-}
-
 
 class Octet {
 private:
@@ -19,12 +7,9 @@ private:
 public:
     explicit Octet(const int byte[8]) {
         data = 0;
-        uint8_t weight = 1;
-        for (int i = 7; i > -1; i--) {
-            if (byte[i] != 0) {
-                data += weight;
-            }
-            weight *= 2;
+        for (int i = 0; i < 8; i++) {
+            data = data << 1;
+            data += byte[i];
         }
     }
 
@@ -41,13 +26,10 @@ public:
     }
 
     bool operator[](int index) const {
-//        if (index == -1) {
-//            index = 7;
-//        }
         if (index < 0 or index > 7) {
             throw std::out_of_range("Index is out of range");
         }
-        if (dpow(2, 7 - index) & data) { // <<
+        if ((1 << (7 - index)) & data) {
             return true;
         } else {
             return false;
