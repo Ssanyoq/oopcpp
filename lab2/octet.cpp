@@ -1,6 +1,7 @@
 #include "octet.h"
 
 
+
 Octet::Octet(const int byte[8]) {
     data = 0;
     for (int i = 0; i < 8; i++) {
@@ -80,30 +81,30 @@ std::ostream &operator<<(std::ostream &os, Octet octet) {
     return os;
 }
 
-int main() {
-    int byte[] = {0, 0, 0, 0, 0, 0, 1, 0};
-    int byte2[] = {1, 0, 0, 1, 0, 0, 0, 0};
-    Octet oct(byte);
-    Octet oct2(byte2);
-//    cout << oct << oct2 << endl;
+//int main() {
+//    int byte[] = {0, 0, 0, 0, 0, 0, 1, 0};
+//    int byte2[] = {1, 0, 0, 1, 0, 0, 0, 0};
+//    Octet oct(byte);
+//    Octet oct2(byte2);
+////    cout << oct << oct2 << endl;
+////
+////    cout << oct.add(oct2);
+////
+////    cout << ~oct2;
+////
+////    cout << oct.getAddition() << endl;
 //
-//    cout << oct.add(oct2);
+//    cout << oct;
 //
-//    cout << ~oct2;
+//    oct.setBit(0, 1);
 //
-//    cout << oct.getAddition() << endl;
-
-    cout << oct;
-
-    oct.setBit(0, 1);
-
-    cout << oct;
-
-    oct.setBit(1, 1);
-    oct.setBit(6, 0);
-    oct.setBit(0, 1);
-
-    cout << oct;
-
-    return 0;
-}
+//    cout << oct;
+//
+//    oct.setBit(1, 1);
+//    oct.setBit(6, 0);
+//    oct.setBit(0, 1);
+//
+//    cout << oct;
+//
+//    return 0;
+//}

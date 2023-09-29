@@ -18,6 +18,8 @@ class Octet {
 private:
     uint8_t data;
 public:
+    explicit Octet(): data(0){};
+
     explicit Octet(const int byte[8]);
 
     explicit Octet(uint8_t byte) : data(byte){};
