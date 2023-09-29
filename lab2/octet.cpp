@@ -29,6 +29,19 @@ bool Octet::operator[](int index) const {
     }
 }
 
+void Octet::setBit(int index, bool value) {
+    if (index < 0 or index > 7) {
+        throw std::out_of_range("Index is out of range");
+    }
+    if (this->operator[](index) != value) {
+        if (value) {
+            data += 1 << (7 - index); // 2 ^ (bit's rank)
+        } else {
+            data -= 1 << (7 - index);
+        }
+    }
+}
+
 Octet Octet::operator~() const {
     return Octet(~data);
 };
@@ -72,14 +85,25 @@ int main() {
     int byte2[] = {1, 0, 0, 1, 0, 0, 0, 0};
     Octet oct(byte);
     Octet oct2(byte2);
-    cout << oct << oct2 << endl;
+//    cout << oct << oct2 << endl;
+//
+//    cout << oct.add(oct2);
+//
+//    cout << ~oct2;
+//
+//    cout << oct.getAddition() << endl;
 
-    cout << oct.add(oct2);
+    cout << oct;
 
-    cout << ~oct2;
+    oct.setBit(0, 1);
 
-    cout << oct.getAddition() << endl;
+    cout << oct;
 
+    oct.setBit(1, 1);
+    oct.setBit(6, 0);
+    oct.setBit(0, 1);
+
+    cout << oct;
 
     return 0;
 }

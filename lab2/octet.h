@@ -28,6 +28,16 @@ public:
 
     bool operator[](int index) const;
 
+
+    /**
+     * Sets individual bit to given value
+     * @param index index of a bit that needs to be changed
+     * @param value new boolean value
+     *
+     * @throws std::out_of_range if index is out of range( < 0 or > 7)
+     */
+    void setBit(int index, bool value);
+
     Octet operator~() const;
 
     Octet add(Octet other, bool *flag = nullptr) const;
