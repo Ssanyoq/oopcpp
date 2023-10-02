@@ -6,4 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 add_executable(lab2
         octet.cpp
         binary.cpp
+        octet.h
+        binary.h
+        utils.cpp
+        utils.h
 )
