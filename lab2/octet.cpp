@@ -1,4 +1,6 @@
 #include "octet.h"
+#include <format>
+#include <iostream>
 
 
 
@@ -19,7 +21,7 @@ Octet Octet::operator&(Octet other) const {
     return Octet(other.data & data);
 }
 
-bool Octet::operator[](int index) const {
+bool Octet::operator[](unsigned int index) const {
     if (index < 0 or index > 7) {
         throw std::out_of_range("Index is out of range");
     }

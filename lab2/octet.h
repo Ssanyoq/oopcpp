@@ -28,7 +28,7 @@ public:
 
     Octet operator&(Octet other) const;
 
-    bool operator[](int index) const;
+    bool operator[](unsigned int index) const;
 
 
     /**
