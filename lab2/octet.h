@@ -31,6 +31,7 @@ public:
     bool operator[](unsigned int index) const;
 
 
+
     /**
      * Sets individual bit to given value
      * @param index index of a bit that needs to be changed

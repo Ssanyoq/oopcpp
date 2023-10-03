@@ -25,11 +25,7 @@ bool Octet::operator[](unsigned int index) const {
     if (index < 0 or index > 7) {
         throw std::out_of_range("Index is out of range");
     }
-    if ((1 << (7 - index)) & data) {
-        return true;
-    } else {
-        return false;
-    }
+    return (1 << (7 - index)) & data;
 }
 
 void Octet::setBit(int index, bool value) {
@@ -51,16 +47,20 @@ Octet Octet::operator~() const {
 
 Octet Octet::add(Octet other, bool *flag) const {
     uint8_t sum = 0;
-    uint8_t curWeight = 1;
+
+    bool buffer = false;
+    if (flag != nullptr) {
+        buffer = *flag;
+    }
+
     for (int i = 7; i > -1; i--) {
         bool otherBit = other[i];
         bool thisBit = this->operator[](i);
 
-        sum += (otherBit ^ thisBit ^ *flag) * curWeight;
+        sum += (otherBit ^ thisBit ^ buffer) << (7 - i);
 
-        *flag = (thisBit & otherBit) | (*flag & (thisBit ^ otherBit));
+        buffer = (thisBit & otherBit) | (buffer & (thisBit ^ otherBit));
 
-        curWeight *= 2;
     }
     return Octet(sum);
 }
@@ -82,31 +82,3 @@ std::ostream &operator<<(std::ostream &os, Octet octet) {
     os << endl;
     return os;
 }
-
-//int main() {
-//    int byte[] = {0, 0, 0, 0, 0, 0, 1, 0};
-//    int byte2[] = {1, 0, 0, 1, 0, 0, 0, 0};
-//    Octet oct(byte);
-//    Octet oct2(byte2);
-////    cout << oct << oct2 << endl;
-////
-////    cout << oct.add(oct2);
-////
-////    cout << ~oct2;
-////
-////    cout << oct.getAddition() << endl;
-//
-//    cout << oct;
-//
-//    oct.setBit(0, 1);
-//
-//    cout << oct;
-//
-//    oct.setBit(1, 1);
-//    oct.setBit(6, 0);
-//    oct.setBit(0, 1);
-//
-//    cout << oct;
-//
-//    return 0;
-//}
