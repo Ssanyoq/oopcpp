@@ -21,7 +21,7 @@ BinaryNumber::BinaryNumber(const string &binaryNumber) {
 //    numberStart++; // since we're putting the sign manually
     octets = new Octet[len];
     octetsLength = len;
-    octets[0].setBit(0, binaryNumber[0]);
+    octets[0].setBit(0, charToBinary(binaryNumber[0]));
 
     for (int i = 1; i < binaryNumber.length(); i++) {
         if (binaryNumber[i] == '1') {
@@ -89,7 +89,7 @@ string BinaryNumber::getString() const {
  * Полностью противоположная getTwosComplement функция
  * @see getTwosComplement()
  */
-BinaryNumber BinaryNumber::getFromTwosComplement() {
+BinaryNumber BinaryNumber::getFromTwosComplement() const {
     bool sign = operator[](0);
     if (!sign) {
         return copy();

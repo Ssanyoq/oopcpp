@@ -50,7 +50,7 @@ public:
      * Полностью противоположная getTwosComplement функция
      * @see getTwosComplement()
      */
-    BinaryNumber getFromTwosComplement();
+    BinaryNumber getFromTwosComplement() const;
 
     string getString() const;
 

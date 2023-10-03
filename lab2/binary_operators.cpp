@@ -14,39 +14,32 @@ bool BinaryNumber::operator[](int index) const {
 }
 
 BinaryNumber BinaryNumber::operator+(const BinaryNumber &other) const {
-    BinaryNumber biggerComplement = this->getTwosComplement();
-    BinaryNumber smallerComplement = other.getTwosComplement();
-
-    if (smallerComplement.octetsLength > biggerComplement.octetsLength) {
-        std::swap(biggerComplement, smallerComplement);
+    BinaryNumber longerNumber(getTwosComplement());
+    BinaryNumber shorterNumber(other.getTwosComplement());
+    if (shorterNumber.octetsLength > longerNumber.octetsLength) {
+        std::swap(longerNumber, shorterNumber);
     }
 
-    bool buffer = false;
-
-    int bigger_i = biggerComplement.octetsLength - 1;
-    int smaller_i = smallerComplement.octetsLength - 1;
-
-    for (; smaller_i >= 0; smaller_i--) {
-        biggerComplement.octets[bigger_i] = biggerComplement
-                .octets[bigger_i]
-                .add(smallerComplement.octets[smaller_i], &buffer);
-        bigger_i--;
+    bool carry = false;
+    int longerInd = longerNumber.octetsLength - 1;
+    for (int shorterInd = shorterNumber.octetsLength - 1; shorterInd >= 0; shorterInd--) {
+        longerNumber.octets[longerInd] =
+                longerNumber.octets[longerInd]
+                .add(shorterNumber.octets[shorterInd], &carry);
+        longerInd--;
     }
 
-    if (buffer) {
-        for (; bigger_i >= 0; bigger_i--) {
-            biggerComplement.octets[bigger_i] = biggerComplement
-                    .octets[bigger_i]
-                    .add(Octet(), &buffer);
-            if (!buffer) {
-                break;
-            }
+    for (;longerInd >= 0; longerInd--) {
+        longerNumber.octets[longerInd] = longerNumber.octets[longerInd].add(Octet(), &carry);
+        if (!carry) {
+            break;
         }
     }
-    return BinaryNumber(biggerComplement.getFromTwosComplement());
+
+    return longerNumber.getFromTwosComplement();
 }
 
-BinaryNumber BinaryNumber::operator~() const { //TODO
+BinaryNumber BinaryNumber::operator~() const {
     BinaryNumber newNumber = copy();
     for (int i = 0; i < newNumber.octetsLength; i++) {
         newNumber.octets[i] = ~newNumber.octets[i];
