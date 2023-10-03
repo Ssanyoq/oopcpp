@@ -8,4 +8,6 @@ std::string longToBinary(long num);
 
 char binaryToChar(bool bin);
 
+bool charToBinary(char bit);
+
 #endif
