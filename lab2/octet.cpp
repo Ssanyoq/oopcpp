@@ -51,20 +51,16 @@ Octet Octet::operator~() const {
 
 Octet Octet::add(Octet other, bool *flag) const {
     uint8_t sum = 0;
-    bool buffer = false;
     uint8_t curWeight = 1;
     for (int i = 7; i > -1; i--) {
         bool otherBit = other[i];
         bool thisBit = this->operator[](i);
 
-        sum += (otherBit ^ thisBit ^ buffer) * curWeight;
+        sum += (otherBit ^ thisBit ^ *flag) * curWeight;
 
-        buffer = (thisBit & otherBit) | (buffer & (thisBit ^ otherBit));
+        *flag = (thisBit & otherBit) | (*flag & (thisBit ^ otherBit));
 
         curWeight *= 2;
-    }
-    if (flag != nullptr) {
-        *flag = buffer;
     }
     return Octet(sum);
 }
@@ -72,6 +68,10 @@ Octet Octet::add(Octet other, bool *flag) const {
 
 int Octet::getAddition() const {
     return 256 - data;
+}
+
+Octet Octet::copy() const {
+    return Octet(data);
 }
 
 std::ostream &operator<<(std::ostream &os, Octet octet) {

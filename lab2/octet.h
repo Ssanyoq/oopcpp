@@ -46,6 +46,8 @@ public:
 
     int getAddition() const;
 
+    Octet copy() const;
+
     friend std::ostream &operator<< (std::ostream &os, Octet octet);
 };
 
