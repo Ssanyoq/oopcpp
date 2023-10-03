@@ -7,7 +7,7 @@
 
 class BinaryNumber {
 private:
-    int numberStart; // starting position
+//    int numberStart; // starting position
 
     size_t octetsLength;
     Octet *octets; // data storage
@@ -30,6 +30,8 @@ public:
     }
 
     size_t getLength() const;
+
+    void setBit(int index, bool value);
 
     /**
      * Возвращает бит числа под индексом index. Начинается с 0 и нулевой бит - знак

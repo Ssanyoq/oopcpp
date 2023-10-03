@@ -1,7 +1,7 @@
 #include "binary.h"
 
 /**
- * Возвращает бит числа под индексом index. Начинается с 0 и нулевой бит - знак
+ * Возвращает бит числа под индексом index. Индексируется с 0 и нулевой бит - знак
  * @param index int
  * @throws std::out_of_range если индекс выходит за рамки разрешенного
  */
@@ -9,9 +9,8 @@ bool BinaryNumber::operator[](int index) const {
     if (index < 0 or index >= getLength()) {
         throw std::out_of_range("Index is out of range");
     }
-    size_t octet_i = (index + numberStart) / 8;
-    size_t bit_i = (index + numberStart) % 8;
-    return octets[octet_i][bit_i];
+
+    return octets[index / 8][index % 8];
 }
 
 BinaryNumber BinaryNumber::operator+(const BinaryNumber &other) const {
@@ -48,15 +47,11 @@ BinaryNumber BinaryNumber::operator+(const BinaryNumber &other) const {
 }
 
 BinaryNumber BinaryNumber::operator~() const { //TODO
-    string newStr = getString();
-    for (int i = 0; i < newStr.size(); i++) {
-        if (newStr[i] == '1') {
-            newStr[i] = '0';
-        } else {
-            newStr[i] = '1';
-        }
+    BinaryNumber newNumber = copy();
+    for (int i = 0; i < newNumber.octetsLength; i++) {
+        newNumber.octets[i] = ~newNumber.octets[i];
     }
-    return BinaryNumber(newStr);
+    return newNumber;
 }
 
 BinaryNumber BinaryNumber::operator-() const {
@@ -70,10 +65,21 @@ BinaryNumber BinaryNumber::operator-() const {
 }
 
 std::ostream &operator<<(std::ostream &os, BinaryNumber binaryNumber) {
-    os << "Number: " << "start at index " << binaryNumber.numberStart << endl;
-    for (int i = 0; i < binaryNumber.octetsLength; i++) {
-        os << binaryNumber.octets[i];
+    os << "Number: ";
+    for (int i = 0; i < binaryNumber.getLength(); i++) {
+        cout << binaryNumber[i];
+        if (i == 0) {
+            cout << '.'; // sign delimiter
+        }
     }
+
+    cout << "; " << binaryNumber.octetsLength << " octet";
+    if (binaryNumber.octetsLength != 1) {
+        cout << "s are"; // plural
+    } else cout << " is"; // singular
+
+    cout << " used.";
+
     os << endl;
     return os;
 }

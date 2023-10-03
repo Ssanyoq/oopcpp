@@ -11,16 +11,19 @@ BinaryNumber::BinaryNumber(const string &binaryNumber) {
         BinaryNumber(string("0"));
     }
     size_t len = binaryNumber.length() / 8;
+    int numberStart;
     if (binaryNumber.length() % 8 != 0) {
         len++;
         numberStart = 8 - binaryNumber.length() % 8; // if length doesn't take all octets
     } else {
         numberStart = 0;
     }
+//    numberStart++; // since we're putting the sign manually
     octets = new Octet[len];
     octetsLength = len;
+    octets[0].setBit(0, binaryNumber[0]);
 
-    for (int i = 0; i < binaryNumber.length(); i++) {
+    for (int i = 1; i < binaryNumber.length(); i++) {
         if (binaryNumber[i] == '1') {
             octets[(i + numberStart) / 8].setBit((i + numberStart) % 8, true);
         } else if (binaryNumber[i] != '0') { // bit is 0 by default
@@ -29,14 +32,11 @@ BinaryNumber::BinaryNumber(const string &binaryNumber) {
     }
 }
 
-BinaryNumber::BinaryNumber(long number) {
-    BinaryNumber(longToBinary(number));
-}
+BinaryNumber::BinaryNumber(long number) : BinaryNumber(longToBinary(number)) {};
 
 BinaryNumber::BinaryNumber(BinaryNumber const &other) {
     octets = new Octet[other.octetsLength];
     octetsLength = other.octetsLength;
-    numberStart = other.numberStart;
 
     for (int i = 0; i < other.octetsLength; i++) {
         octets[i] = other.octets[i].copy();
@@ -44,32 +44,37 @@ BinaryNumber::BinaryNumber(BinaryNumber const &other) {
 }
 
 size_t BinaryNumber::getLength() const {
-    return octetsLength * 8 - numberStart;
+    return octetsLength * 8;
 }
 
+void BinaryNumber::setBit(int index, bool value) {
+    if (index < 0 or index >= getLength()) {
+        throw std::out_of_range("Index is out of range");
+    }
+    octets[index / 8].setBit(index % 8, value);
+}
 
 /**
  * Возвращает экземпляр класса в дополнительном коде(если код этого числа - прямой)
  */
 BinaryNumber BinaryNumber::getTwosComplement() const {
-    string newNum;
     bool sign = operator[](0);
     if (!sign) {
         return copy();
     }
-    newNum = operator~().getString();
-    newNum[0] = '1';
+    BinaryNumber newNum = operator~();
+    newNum.setBit(0, sign);
 
 
     for (int i = getLength() - 1; i >= 0; i--) {
-        if (newNum[i] == '1') {
-            newNum[i] = '0';
+        if (newNum[i]) {
+            newNum.setBit(i, 0);
         } else {
-            newNum[i] = '1';
+            newNum.setBit(i, 1);
             break;
         }
     }
-    return BinaryNumber(newNum);
+    return newNum;
 }
 
 string BinaryNumber::getString() const {
@@ -90,16 +95,16 @@ BinaryNumber BinaryNumber::getFromTwosComplement() {
         return copy();
     }
 
-    string newNum = getString();
-    for (int i = getLength() - 1; i > 0; i--) { // >0 because of sign
-        if (newNum[i] == '0') {
-            newNum[i] = '1';
+    BinaryNumber newNum = copy();
+    for (int i = getLength() - 1; i > 0; i--) { // >0 because we ignore the sign
+        if (!newNum[i]) {
+            newNum.setBit(i, 1);
         } else {
-            newNum[i] = '0';
+            newNum.setBit(i, 0);
             break;
         }
     }
-    return -(~BinaryNumber(newNum));
+    return -(~newNum);
 }
 
 
