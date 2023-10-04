@@ -1,10 +1,11 @@
 #ifndef LAB2_BINARY_H
 #define LAB2_BINARY_H
 
-#include "octet.h"
-#include "utils.h"
+#include "../octet/octet.h"
+#include "../util_functions/utils.h"
 
-const char DIGITS[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+
 
 
 class BinaryNumber {
@@ -54,7 +55,6 @@ public:
      */
     BinaryNumber getFromTwosComplement() const;
 
-    int getDecimal() const;
 
     string getInBase(unsigned int base) const;
 
@@ -69,5 +69,8 @@ public:
     friend std::ostream &operator<<(std::ostream &os, BinaryNumber binaryNumber);
 
 };
+
+#include "../util_functions/base_converters.h" // uses BinaryNumber,
+// so it should be included after class declaration
 
 #endif //LAB2_BINARY_H
