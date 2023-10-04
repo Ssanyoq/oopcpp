@@ -1,9 +1,18 @@
 #include "utils.h"
 
 std::string longToBinary(long num) {
+    bool minus = false;
+    if (num < 0) {
+        minus = true;
+        num *= -1;
+    }
     std::bitset<sizeof(long) * 8> binarySet(num);
 
-    return binarySet.to_string();
+    std::string out = binarySet.to_string();
+    if (minus) {
+        out[0] = '1';
+    }
+    return out;
 }
 
 char binaryToChar(bool bin) {
