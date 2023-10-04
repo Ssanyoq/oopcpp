@@ -4,6 +4,8 @@
 #include "octet.h"
 #include "utils.h"
 
+const char DIGITS[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 
 class BinaryNumber {
 private:
@@ -51,6 +53,10 @@ public:
      * @see getTwosComplement()
      */
     BinaryNumber getFromTwosComplement() const;
+
+    int getDecimal() const;
+
+    string getInBase(unsigned int base) const;
 
     string getString() const;
 

@@ -5,7 +5,6 @@
  *
  * @see Octet в octet.cpp
  */
-
 BinaryNumber::BinaryNumber(const string &binaryNumber) {
     if (binaryNumber.empty()) {
         BinaryNumber(string("0"));
@@ -105,6 +104,42 @@ BinaryNumber BinaryNumber::getFromTwosComplement() const {
         }
     }
     return -(~newNum);
+}
+
+int BinaryNumber::getDecimal() const {
+    int decimal = 0;
+    for (int i = 1; i < getLength(); i++) {
+        decimal += operator[](i) << (getLength() - 1 - i);
+    }
+    if (operator[](0)) {
+        decimal *= -1;
+    }
+    return decimal;
+}
+
+string BinaryNumber::getInBase(unsigned int base) const {
+    if (base < 2 or base > 36) {
+        throw std::logic_error("This base is not supported");
+    }
+    int decimal = getDecimal();
+    bool minus = false;
+    if (decimal < 0) {
+        minus = true;
+        decimal *= -1;
+    }
+    string out;
+    unsigned remainder, quotient = decimal;
+    while (quotient >= base) {
+        remainder = quotient % base;
+        quotient = quotient / base;
+        out.push_back(DIGITS[remainder]);
+    }
+    out.push_back(DIGITS[quotient]);
+    if (minus) {
+        out.push_back('-');
+    }
+    std::reverse(out.begin(), out.end());
+    return out;
 }
 
 
