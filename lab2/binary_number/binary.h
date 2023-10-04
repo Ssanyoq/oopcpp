@@ -5,9 +5,6 @@
 #include "../util_functions/utils.h"
 
 
-
-
-
 class BinaryNumber {
 private:
 //    int numberStart; // starting position
@@ -41,7 +38,7 @@ public:
      * @param index int
      * @throws std::out_of_range если индекс выходит за рамки разрешенного
      */
-    bool operator [](int index) const;
+    bool operator[](int index) const;
 
 
     /**
@@ -60,11 +57,21 @@ public:
 
     string getString() const;
 
-    BinaryNumber operator +(const BinaryNumber &other) const;
+    bool sign() const;
+
+    BinaryNumber operator+(const BinaryNumber &other) const;
 
     BinaryNumber operator~() const;
 
     BinaryNumber operator-() const;
+
+    BinaryNumber operator-(const BinaryNumber &other) const;
+
+    BinaryNumber operator--();
+
+    BinaryNumber operator++(int _);
+
+    friend bool operator==(const BinaryNumber num1, const BinaryNumber num2);
 
     friend std::ostream &operator<<(std::ostream &os, BinaryNumber binaryNumber);
 
