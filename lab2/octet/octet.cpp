@@ -62,6 +62,9 @@ Octet Octet::add(Octet other, bool *flag) const {
         buffer = (thisBit & otherBit) | (buffer & (thisBit ^ otherBit));
 
     }
+    if (flag != nullptr) {
+        *flag = buffer;
+    }
     return Octet(sum);
 }
 
