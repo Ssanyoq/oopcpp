@@ -39,6 +39,10 @@ BinaryNumber BinaryNumber::operator+(const BinaryNumber &other) const {
     return longerNumber.getFromTwosComplement();
 }
 
+BinaryNumber BinaryNumber::operator-(const BinaryNumber& other) const {
+    return operator+(-other);
+}
+
 BinaryNumber BinaryNumber::operator~() const {
     BinaryNumber newNumber = copy();
     for (int i = 0; i < newNumber.octetsLength; i++) {
@@ -56,6 +60,24 @@ BinaryNumber BinaryNumber::operator-() const {
     }
     return BinaryNumber(newNum);
 }
+
+
+BinaryNumber BinaryNumber::operator--() {
+    *this = this->operator+(-BinaryNumber(1));
+    return *this;
+}
+
+BinaryNumber BinaryNumber::operator++(int _) {
+    BinaryNumber temp = copy();
+    *this = this->operator+(BinaryNumber(1));
+    return temp;
+}
+
+bool operator ==(const BinaryNumber num1, const BinaryNumber num2) {
+    return getDecimal(num1) == getDecimal(num2);
+}
+
+
 
 std::ostream &operator<<(std::ostream &os, BinaryNumber binaryNumber) {
     os << "Number: ";

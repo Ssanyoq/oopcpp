@@ -106,10 +106,12 @@ BinaryNumber BinaryNumber::getFromTwosComplement() const {
     return -(~newNum);
 }
 
-
-
 string BinaryNumber::getInBase(unsigned int base) const {
     return decimalToBase(base, getDecimal(*this));
+}
+
+bool BinaryNumber::sign() const {
+    return operator[](0);
 }
 
 
