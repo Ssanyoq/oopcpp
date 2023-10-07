@@ -71,8 +71,6 @@ public:
 
     BinaryNumber operator++(int _);
 
-    friend bool operator==(const BinaryNumber num1, const BinaryNumber num2);
-
     friend std::ostream &operator<<(std::ostream &os, BinaryNumber binaryNumber);
 
 };

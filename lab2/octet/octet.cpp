@@ -8,6 +8,9 @@ Octet::Octet(const int byte[8]) {
     data = 0;
     for (int i = 0; i < 8; i++) {
         data = data << 1;
+        if (byte[i] > 1 or byte[i] < 0) {
+            throw std::invalid_argument("Values must be 1 or 0");
+        }
         data += byte[i];
     }
 }
