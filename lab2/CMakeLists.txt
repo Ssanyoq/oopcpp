@@ -16,14 +16,15 @@ add_library(utility util_functions/utils.cpp
         util_functions/base_converters.cpp
         util_functions/base_converters.h)
 
-
-add_executable(lab2 main.cpp
-        dynamic/dynamic_octets.cpp
+add_library(dynamic dynamic/dynamic_octets.cpp
         dynamic/dynamic_octets.h)
-target_link_libraries(lab2 octet binary_number utility)
+
+
+add_executable(lab2 main.cpp)
+target_link_libraries(lab2 octet binary_number utility dynamic)
 
 add_executable(test test/octet_tests.cpp
-        dynamic/dynamic_octets.cpp
-        dynamic/dynamic_octets.h
-        test/dynamic_tests.cpp)
-target_link_libraries(test octet binary_number utility catch2)
+        test/dynamic_tests.cpp
+        test/binary_tests.cpp)
+
+target_link_libraries(test octet binary_number utility catch2 dynamic)
