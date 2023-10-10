@@ -1,5 +1,11 @@
 #include "utils.h"
 
+
+/**
+ * Function that converts long to std::string. Converts number's sign into a sign bit
+ * @param num - needed number
+ * @return string with binary representation of a number
+ */
 std::string longToBinary(long num) {
     bool minus = false;
     if (num < 0) {
