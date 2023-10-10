@@ -1,8 +1,6 @@
 #include "../catch2/catch_amalgamated.hpp"
 #include "../octet/octet.h"
 #include "../binary_number/binary.h"
-#include "../util_functions/utils.h"
-#include "../util_functions/base_converters.h"
 
 #define SET_RAND srand(time(NULL))
 
@@ -28,7 +26,7 @@ TEST_CASE("String constructor") {
 
     int stringI = strNum.size() - 1; // index for string
     int binI = binNum.getLength() - 1; // index for BinaryNumber
-    for (; binI > 0, stringI > 0; binI--, stringI--) { // 0th is sign
+    for (; stringI > 0; binI--, stringI--) { // 0th is sign
         REQUIRE(binNum[binI] == charToBinary(strNum[stringI]));
     }
 }
@@ -131,8 +129,7 @@ TEST_CASE("BinaryNumber ~") {
     }
     BinaryNumber binaryNumber = ~BinaryNumber(s);
     REQUIRE(charToBinary(s[0]) != binaryNumber.getSign());
-    for (int binaryI = binaryNumber.getLength() - 1, stringI = s.size() - 1;
-         binaryI > 0, stringI > 0; binaryI--, stringI--) {
+    for (int binaryI = binaryNumber.getLength() - 1, stringI = s.size() - 1; stringI > 0; binaryI--, stringI--) {
         REQUIRE(charToBinary(s[stringI]) != binaryNumber[binaryI]);
     }
 }
