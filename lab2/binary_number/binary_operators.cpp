@@ -73,22 +73,45 @@ BinaryNumber BinaryNumber::operator++(int _) {
     return temp;
 }
 
+bool BinaryNumber::operator==(const BinaryNumber& other) const { // by value
+    if (other.getSign() != getSign()) {
+        return false;
+    }
+    size_t thisI = getLength() - 1;
+    size_t otherI = other.getLength() - 1;
+    for (; thisI > 0, otherI > 0; thisI--, otherI--) {
+        if (operator[](thisI) != other[otherI]) {
+            return false;
+        }
+    }
+    for (; thisI > 0; thisI--) {
+        if (operator[](thisI) != 0) {
+            return false;
+        }
+    }
+    for (; otherI > 0; otherI--) {
+        if (other[otherI] != 0) {
+            return false;
+        }
+    }
+    return true;
+}
+bool BinaryNumber::operator!=(const BinaryNumber& other) const {
+    return !(operator==(other));
+}
+
 std::ostream &operator<<(std::ostream &os, BinaryNumber binaryNumber) {
     os << "Number: ";
     for (int i = 0; i < binaryNumber.getLength(); i++) {
-        cout << binaryNumber[i];
+        os << binaryNumber[i];
         if (i == 0) {
-            cout << '.'; // sign delimiter
+            os << '.'; // getSign delimiter
         }
     }
-
-    cout << "; " << binaryNumber.octetsLength << " octet";
+    os << "; " << binaryNumber.octetsLength << " octet";
     if (binaryNumber.octetsLength != 1) {
-        cout << "s are"; // plural
+        os << "s are"; // plural
     } else cout << " is"; // singular
-
-    cout << " used.";
-
-    os << endl;
+    os << " used." << endl;
     return os;
 }

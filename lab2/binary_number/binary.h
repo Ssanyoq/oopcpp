@@ -57,7 +57,7 @@ public:
 
     string getString() const;
 
-    bool sign() const;
+    bool getSign() const;
 
     BinaryNumber operator+(const BinaryNumber &other) const;
 
@@ -70,6 +70,10 @@ public:
     BinaryNumber operator--();
 
     BinaryNumber operator++(int _);
+
+    bool operator==(const BinaryNumber& other) const;
+
+    bool operator!=(const BinaryNumber& other) const;
 
     friend std::ostream &operator<<(std::ostream &os, BinaryNumber binaryNumber);
 
