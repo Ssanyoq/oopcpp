@@ -49,7 +49,7 @@ TEST_CASE("Resize") {
     }
 }
 
-TEST_CASE("[]") {
+TEST_CASE("dynamic []") {
     SET_RAND;
     SECTION("i >= size") {
         int size = rand() % RAND_RANGE;
