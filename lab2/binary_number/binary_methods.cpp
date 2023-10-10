@@ -18,7 +18,7 @@ BinaryNumber::BinaryNumber(const string &binaryNumber) {
     } else {
         numberStart = 0;
     }
-//    numberStart++; // since we're putting the sign manually
+//    numberStart++; // since we're putting the getSign in manually
     octets = new Octet[len];
     octetsLength = len;
     octets[0].setBit(0, charToBinary(binaryNumber[0]));
@@ -96,7 +96,7 @@ BinaryNumber BinaryNumber::getFromTwosComplement() const {
     }
 
     BinaryNumber newNum = copy();
-    for (int i = getLength() - 1; i > 0; i--) { // >0 because we ignore the sign
+    for (int i = getLength() - 1; i > 0; i--) { // >0 because we ignore the getSign
         if (!newNum[i]) {
             newNum.setBit(i, 1);
         } else {
@@ -111,7 +111,7 @@ string BinaryNumber::getInBase(unsigned int base) const {
     return decimalToBase(base, getDecimal(*this));
 }
 
-bool BinaryNumber::sign() const {
+bool BinaryNumber::getSign() const {
     return operator[](0);
 }
 
