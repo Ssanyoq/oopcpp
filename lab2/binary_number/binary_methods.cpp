@@ -1,11 +1,7 @@
 #include "binary.h"
 
 
-/**
- * Двоичное число в Двоичном коде, знак кодируется 1 битом
- *
- * @see Octet в octet.cpp
- */
+
 BinaryNumber::BinaryNumber(const string &binaryNumber) {
     if (binaryNumber.empty()) {
         BinaryNumber(string("0"));
@@ -19,8 +15,7 @@ BinaryNumber::BinaryNumber(const string &binaryNumber) {
         numberStart = 0;
     }
 //    numberStart++; // since we're putting the getSign in manually
-    octets = new Octet[len];
-    octetsLength = len;
+    octets = DynamicOctets(len);
     octets[0].setBit(0, charToBinary(binaryNumber[0]));
 
     for (int i = 1; i < binaryNumber.length(); i++) {
@@ -35,16 +30,11 @@ BinaryNumber::BinaryNumber(const string &binaryNumber) {
 BinaryNumber::BinaryNumber(long number) : BinaryNumber(longToBinary(number)) {};
 
 BinaryNumber::BinaryNumber(BinaryNumber const &other) {
-    octets = new Octet[other.octetsLength];
-    octetsLength = other.octetsLength;
-
-    for (int i = 0; i < other.octetsLength; i++) {
-        octets[i] = other.octets[i].copy();
-    }
+    octets = DynamicOctets(other.octets);
 }
 
 size_t BinaryNumber::getLength() const {
-    return octetsLength * 8;
+    return octets.getLength() * 8;
 }
 
 void BinaryNumber::setBit(int index, bool value) {

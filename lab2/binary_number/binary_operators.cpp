@@ -16,13 +16,13 @@ bool BinaryNumber::operator[](int index) const {
 BinaryNumber BinaryNumber::operator+(const BinaryNumber &other) const {
     BinaryNumber longerNumber(getTwosComplement());
     BinaryNumber shorterNumber(other.getTwosComplement());
-    if (shorterNumber.octetsLength > longerNumber.octetsLength) {
+    if (shorterNumber.octets.getLength() > longerNumber.octets.getLength()) {
         std::swap(longerNumber, shorterNumber);
     }
 
     bool carry = false;
-    int longerInd = longerNumber.octetsLength - 1;
-    for (int shorterInd = shorterNumber.octetsLength - 1; shorterInd >= 0; shorterInd--) {
+    int longerInd = longerNumber.octets.getLength() - 1;
+    for (int shorterInd = shorterNumber.octets.getLength() - 1; shorterInd >= 0; shorterInd--) {
         longerNumber.octets[longerInd] =
                 longerNumber.octets[longerInd]
                         .add(shorterNumber.octets[shorterInd], &carry);
@@ -45,7 +45,7 @@ BinaryNumber BinaryNumber::operator-(const BinaryNumber &other) const {
 
 BinaryNumber BinaryNumber::operator~() const {
     BinaryNumber newNumber = copy();
-    for (int i = 0; i < newNumber.octetsLength; i++) {
+    for (int i = 0; i < newNumber.octets.getLength(); i++) {
         newNumber.octets[i] = ~newNumber.octets[i];
     }
     return newNumber;
@@ -108,8 +108,8 @@ std::ostream &operator<<(std::ostream &os, BinaryNumber binaryNumber) {
             os << '.'; // getSign delimiter
         }
     }
-    os << "; " << binaryNumber.octetsLength << " octet";
-    if (binaryNumber.octetsLength != 1) {
+    os << "; " << binaryNumber.octets.getLength() << " octet";
+    if (binaryNumber.octets.getLength() != 1) {
         os << "s are"; // plural
     } else cout << " is"; // singular
     os << " used." << endl;
