@@ -9,8 +9,11 @@ std::string longToBinary(long num) {
     std::bitset<sizeof(long) * 8> binarySet(num);
 
     std::string out = binarySet.to_string();
+
     if (minus) {
-        out[0] = '1';
+        out = '1' + out;
+    } else {
+        out = '0' + out;
     }
     return out;
 }
@@ -26,7 +29,7 @@ char binaryToChar(bool bin) {
 bool charToBinary(char bit) {
     if (bit == '0') {
         return false;
-    } else if (bit == '1') {
+    } else if (bit == '1' or bit == '-') {
         return true;
     } else {
         throw std::invalid_argument("Cannot convert this character to boolean value");
