@@ -61,5 +61,10 @@ TEST_CASE("dynamic []") {
         unsigned ind = -rand() - 1;
         DynamicOctets o(size);
         REQUIRE_THROWS_AS(o[ind], std::invalid_argument);
+    }SECTION("assignment") {
+        int size = rand() % RAND_RANGE;
+        DynamicOctets o(size);
+        o[0] = Octet(128);
+        REQUIRE(o[0][0] == 1);
     }
 }
