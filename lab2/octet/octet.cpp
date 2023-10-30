@@ -16,11 +16,11 @@ Octet::Octet(const int byte[8]) {
 }
 
 
-Octet Octet::operator+(Octet other) const {
+Octet Octet::operator+(const Octet &other) const {
     return Octet(other.data + data);
 }
 
-Octet Octet::operator&(Octet other) const {
+Octet Octet::operator&(const Octet &other) const {
     return Octet(other.data & data);
 }
 

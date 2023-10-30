@@ -44,14 +44,14 @@ public:
      * @returns Resulting Octet
      * @see Octet::add()
      */
-    Octet operator+(Octet other) const;
+    Octet operator+(const Octet &other) const;
 
     /**
      * @brief Performs bitwise AND with other Octet
      * @param other other Octet
      * @returns Resulting Octet
      */
-    Octet operator&(Octet other) const;
+    Octet operator&(const Octet &other) const;
 
     /**
      * @brief Returns value of needed bit
@@ -101,14 +101,5 @@ public:
 
     friend std::ostream &operator<< (std::ostream &os, Octet octet);
 };
-
-
-
-
-
-
-
-
-
 
 #endif //LAB2_OCTET_H

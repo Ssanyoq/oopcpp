@@ -27,11 +27,9 @@ BinaryNumber::BinaryNumber(const string &binaryNumber) {
     }
 }
 
-BinaryNumber::BinaryNumber(long number) : BinaryNumber(longToBinary(number)) {};
+BinaryNumber::BinaryNumber(long number) : BinaryNumber(longToBinary(number)) {}
 
-BinaryNumber::BinaryNumber(BinaryNumber const &other) {
-    octets = DynamicOctets(other.octets);
-}
+BinaryNumber::BinaryNumber(BinaryNumber const &other): octets(DynamicOctets(other.octets)) {}
 
 size_t BinaryNumber::getLength() const {
     return octets.getLength() * 8;
@@ -89,7 +87,7 @@ BinaryNumber BinaryNumber::getFromTwosComplement() const {
     }
 
     BinaryNumber newNum = copy();
-    // Analog of adding 1 brom getTwosComplement
+    // Analog of adding 1 from getTwosComplement
     for (int i = getLength() - 1; i > 0; i--) { // >0 because we ignore the getSign
         if (!newNum[i]) {
             newNum.setBit(i, 1);

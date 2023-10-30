@@ -62,7 +62,7 @@ BinaryNumber BinaryNumber::operator--() {
     return *this;
 }
 
-BinaryNumber BinaryNumber::operator++(int _) {
+const BinaryNumber BinaryNumber::operator++(int _) {
     BinaryNumber temp = copy();
     *this = this->operator+(BinaryNumber(1));
     return temp;

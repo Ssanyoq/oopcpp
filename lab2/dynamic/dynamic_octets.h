@@ -10,24 +10,19 @@
  */
 class DynamicOctets {
 private:
-    Octet* octets;
+    Octet *octets;
     size_t length;
 public:
     /**
      * Constructor that takes length of needed array
      * @param len
      */
-    explicit DynamicOctets(size_t len) {
-        length = len;
-        octets = new Octet[len];
-    }
+    explicit DynamicOctets(size_t len) : length(len), octets(new Octet[len]) {}
+
     /**
      * Empty constructor that makes 0-length array
      */
-    DynamicOctets() {
-        length = 0;
-        octets = nullptr;
-    }
+    DynamicOctets() : length(0), octets(nullptr) {}
 
     DynamicOctets(const DynamicOctets &other) {
         length = other.length;
@@ -53,6 +48,7 @@ public:
     /**
      * Getter of array's length
      */
-    size_t getLength() const {return length;}
+    size_t getLength() const { return length; }
 };
+
 #endif

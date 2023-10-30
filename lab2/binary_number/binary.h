@@ -12,7 +12,6 @@
  */
 class BinaryNumber {
 private:
-//    int numberStart; // starting position
 
     DynamicOctets octets; // data storage
 public:
@@ -124,7 +123,7 @@ public:
     /**
      * Performs postfix ++ operation
      */
-    BinaryNumber operator++(int _);
+    const BinaryNumber operator++(int _);
 
     /**
      * Checks if 2 numbers have simillar value
