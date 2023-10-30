@@ -4,7 +4,7 @@ void DynamicOctets::resize(size_t newLen) {
     if (newLen == length) {
         return;
     }
-    Octet *newOctets = new Octet[newLen];
+    auto *newOctets = new Octet[newLen];
     int oldI = getLength() - 1;
     for (int i = newLen - 1; (oldI >= 0) && (i >= 0); i--, oldI--) {
         newOctets[i] = octets[i].copy();

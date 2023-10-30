@@ -28,7 +28,7 @@ bool Octet::operator[](unsigned int index) const {
     if (index < 0 or index > 7) {
         throw std::out_of_range("Index is out of range");
     }
-    return (1 << (7 - index)) & data;
+    return (1 << (7 - index)) & data; // 2 ^ (8 - index) & data
 }
 
 void Octet::setBit(int index, bool value) {
@@ -59,6 +59,8 @@ Octet Octet::add(Octet other, bool *flag) const {
     for (int i = 7; i > -1; i--) {
         bool otherBit = other[i];
         bool thisBit = this->operator[](i);
+
+        // Summator from Wikipedia, the free encyclopedia
 
         sum += (otherBit ^ thisBit ^ buffer) << (7 - i);
 

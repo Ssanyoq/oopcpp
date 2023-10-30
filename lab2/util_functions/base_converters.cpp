@@ -3,7 +3,7 @@
 
 int getDecimal(const BinaryNumber& number) {
     int decimal = 0;
-    int len = number.getLength();
+    size_t len = number.getLength();
     for (int i = 1; i < len; i++) {
         decimal += number[i] << (len - 1 - i);
     }
@@ -12,7 +12,7 @@ int getDecimal(const BinaryNumber& number) {
     }
     return decimal;
 }
-string decimalToBase(int base, int decimal) {
+string decimalToBase(unsigned int base, int decimal) {
     if (base < 2 or base > DIGITS.size()) {
         throw std::logic_error("Inputted base is not supported");
     }

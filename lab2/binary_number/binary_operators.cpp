@@ -1,10 +1,6 @@
 #include "binary.h"
 
-/**
- * Возвращает бит числа под индексом index. Индексируется с 0 и нулевой бит - знак
- * @param index int
- * @throws std::out_of_range если индекс выходит за рамки разрешенного
- */
+
 bool BinaryNumber::operator[](int index) const {
     if (index < 0 or index >= getLength()) {
         throw std::out_of_range("Index is out of range");
@@ -22,6 +18,8 @@ BinaryNumber BinaryNumber::operator+(const BinaryNumber &other) const {
 
     bool carry = false;
     int longerInd = longerNumber.octets.getLength() - 1;
+
+    // Adding 2 numbers until shorter one(by Octets amount) ends
     for (int shorterInd = shorterNumber.octets.getLength() - 1; shorterInd >= 0; shorterInd--) {
         longerNumber.octets[longerInd] =
                 longerNumber.octets[longerInd]
@@ -29,6 +27,7 @@ BinaryNumber BinaryNumber::operator+(const BinaryNumber &other) const {
         longerInd--;
     }
 
+    // Shorter one ended, now adding 1 to longer one until carry is 0
     for (; longerInd >= 0; longerInd--) {
         longerNumber.octets[longerInd] = longerNumber.octets[longerInd].add(Octet(), &carry);
         if (!carry) {
@@ -52,13 +51,9 @@ BinaryNumber BinaryNumber::operator~() const {
 }
 
 BinaryNumber BinaryNumber::operator-() const {
-    string newNum = getString();
-    if (newNum[0] == '0') {
-        newNum[0] = '1';
-    } else {
-        newNum[0] = '0';
-    }
-    return BinaryNumber(newNum);
+    BinaryNumber out = copy();
+    out.octets[0].setBit(0, !(out.octets[0][0]));
+    return out;
 }
 
 
@@ -73,7 +68,7 @@ BinaryNumber BinaryNumber::operator++(int _) {
     return temp;
 }
 
-bool BinaryNumber::operator==(const BinaryNumber& other) const { // by value
+bool BinaryNumber::operator==(const BinaryNumber &other) const { // by value
     if (other.getSign() != getSign()) {
         return false;
     }
@@ -84,6 +79,8 @@ bool BinaryNumber::operator==(const BinaryNumber& other) const { // by value
             return false;
         }
     }
+
+    // Now 1 of 2 numbers ended, so we're checking if there are any 1's in remaining octets
     for (; thisI > 0; thisI--) {
         if (operator[](thisI) != 0) {
             return false;
@@ -96,7 +93,8 @@ bool BinaryNumber::operator==(const BinaryNumber& other) const { // by value
     }
     return true;
 }
-bool BinaryNumber::operator!=(const BinaryNumber& other) const {
+
+bool BinaryNumber::operator!=(const BinaryNumber &other) const {
     return !(operator==(other));
 }
 

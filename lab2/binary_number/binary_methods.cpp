@@ -4,7 +4,7 @@
 
 BinaryNumber::BinaryNumber(const string &binaryNumber) {
     if (binaryNumber.empty()) {
-        BinaryNumber(string("0"));
+        BinaryNumber("0");
     }
     size_t len = binaryNumber.length() / 8;
     int numberStart;
@@ -14,7 +14,7 @@ BinaryNumber::BinaryNumber(const string &binaryNumber) {
     } else {
         numberStart = 0;
     }
-//    numberStart++; // since we're putting the getSign in manually
+
     octets = DynamicOctets(len);
     octets[0].setBit(0, charToBinary(binaryNumber[0]));
 
@@ -56,11 +56,14 @@ BinaryNumber BinaryNumber::getTwosComplement() const {
     newNum.setBit(0, sign);
 
 
+    // Below there I'm adding 1
+    // Basically if there is 1, im changing it to 0 and continuing,
+    // else I'm changing 0 to 1 and stopping
     for (int i = getLength() - 1; i >= 0; i--) {
         if (newNum[i]) {
-            newNum.setBit(i, 0);
+            newNum.setBit(i, false);
         } else {
-            newNum.setBit(i, 1);
+            newNum.setBit(i, true);
             break;
         }
     }
@@ -86,6 +89,7 @@ BinaryNumber BinaryNumber::getFromTwosComplement() const {
     }
 
     BinaryNumber newNum = copy();
+    // Analog of adding 1 brom getTwosComplement
     for (int i = getLength() - 1; i > 0; i--) { // >0 because we ignore the getSign
         if (!newNum[i]) {
             newNum.setBit(i, 1);
