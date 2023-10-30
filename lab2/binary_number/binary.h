@@ -40,7 +40,7 @@ public:
     /**
      * @returns Copy of this class object
      */
-    BinaryNumber copy() const {
+    [[nodiscard]] BinaryNumber copy() const {
         return BinaryNumber{*this};
     }
 
@@ -70,12 +70,12 @@ public:
     /**
      * @returns two's complement of this number
      */
-    BinaryNumber getTwosComplement() const;
+    [[nodiscard]] BinaryNumber getTwosComplement() const;
 
     /**
      * Opposite of `getTwosComplement()`
      */
-    BinaryNumber getFromTwosComplement() const;
+    [[nodiscard]] BinaryNumber getFromTwosComplement() const;
 
 
     /**
@@ -101,20 +101,20 @@ public:
      * @param other
      * @return Resulting BinaryNumber
      */
-    BinaryNumber operator+(const BinaryNumber &other) const;
+    [[nodiscard]] BinaryNumber operator+(const BinaryNumber &other) const;
 
     /**
      * Performs bitwise NOT
      */
-    BinaryNumber operator~() const;
+    [[nodiscard]] BinaryNumber operator~() const;
 
     /**
      * Changes sign of a number
      * @returns Resulting number
      */
-    BinaryNumber operator-() const;
+    [[nodiscard]] BinaryNumber operator-() const;
 
-    BinaryNumber operator-(const BinaryNumber &other) const;
+    [[nodiscard]] BinaryNumber operator-(const BinaryNumber &other) const;
 
     /**
      * Performs prefix -- operation

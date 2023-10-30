@@ -8,8 +8,6 @@
 #include <stdexcept>
 #include <string>
 
-using std::vector;
-using std::pow;
 using std::cout;
 using std::endl;
 using std::string;
@@ -78,7 +76,7 @@ public:
      * @brief Performs bitwise NOT
      * @return Resulting Octet
      */
-    Octet operator~() const;
+    [[nodiscard]] Octet operator~() const;
 
     /**
      * @brief Adds two Octets and writes carry in boolean variable
@@ -87,7 +85,7 @@ public:
      * @param flag Pointer to boolean variable that will store carry resulting from addition
      * @return Resulting Octet
      */
-    Octet add(Octet other, bool *flag = nullptr) const;
+    [[nodiscard]] Octet add(Octet other, bool *flag = nullptr) const;
 
     /**
      * @brief Returns value that equals 2^8 - Octet's value
@@ -99,7 +97,7 @@ public:
     /**
      * @returns Copy of this Octet
      */
-    Octet copy() const;
+    [[nodiscard]] Octet copy() const;
 
     friend std::ostream &operator<< (std::ostream &os, Octet octet);
 };

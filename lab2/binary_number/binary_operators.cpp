@@ -74,7 +74,7 @@ bool BinaryNumber::operator==(const BinaryNumber &other) const { // by value
     }
     size_t thisI = getLength() - 1;
     size_t otherI = other.getLength() - 1;
-    for (; thisI > 0, otherI > 0; thisI--, otherI--) {
+    for (; otherI > 0; thisI--, otherI--) {
         if (operator[](thisI) != other[otherI]) {
             return false;
         }
