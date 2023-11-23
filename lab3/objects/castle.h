@@ -6,10 +6,12 @@
 
 class Castle: public Placeable {
 protected:
-    int hp;
+    unsigned hp;
 public:
+    Castle(unsigned hp) : hp(hp), Placeable(<#initializer#>, 0, 0, 0) {};
     void receiveDamage(int amount);
-    int getHP() {return hp};
+    int getHP() const {return hp};
+    bool isDead() const;
 };
 
 

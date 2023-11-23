@@ -2,8 +2,8 @@
 #ifndef OOPCPP_TILE_H
 #define OOPCPP_TILE_H
 
-#include "placeable.h"
-#include "sprite.h"
+#include "../utitlity/coords.h"
+#include "../objects/sprite.h"
 
 enum TileType {
     Road,
@@ -15,10 +15,14 @@ class Tile: public Sprite {
 protected:
     Placeable *contents;
 public:
+
     const TileType tileType;
-    Placeable *getContents();
-    void setContents(Placeable *newContents);
+
+    Tile(TileType type, Coordinates coords ): tileType(type){Sprite();};
+
+    Placeable *getContents()const { return contents;};
+    void setContents(Placeable *newContents) {contents = newContents;};
 };
 
 
-#endif //OOPCPP_TILE_H
+#endif

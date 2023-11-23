@@ -3,10 +3,12 @@
 
 #include "sprite.h"
 
-class Placeable: public Sprite {
+class Placeable : public Sprite {
 public:
-    virtual doAction()= 0;
+    Placeable(const Game &currentGame, long long int x, long long int y, short rotation) : Sprite(currentGame, x, y,
+                                                                                                  rotation) {};
 
+    virtual void doAction() = 0;
 }
 
 #endif

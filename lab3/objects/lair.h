@@ -8,6 +8,8 @@ using std::vector;
 
 class Lair: public Placeable {
 protected:
+    Lair() {}
+
     vector<int, Entity> queue;
 
 public:

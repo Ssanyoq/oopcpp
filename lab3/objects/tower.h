@@ -21,7 +21,9 @@ protected:
     unsigned penetration;
     AttackStrategy strategy;
 
-
+    Tower(const Game &currentGame, const Tile &tile, AttackStrategy strat) {
+        Defence(Game, tile)
+    }
     Entity *pickTarget();
     // ..........
 
