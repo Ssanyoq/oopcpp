@@ -2,19 +2,26 @@
 #ifndef OOPCPP_EFFECT_H
 #define OOPCPP_EFFECT_H
 
+#include "entity.h"
+
 enum EffectType {
     Slowness,
     Fatigue,
-    Poison /* ,
+    Poison,
+    /*
     ...
     */
 };
 
 class Effect {
 protected:
-    const EffectType effectType;
+    unsigned ticksLeft;
 public:
-    void dealEffect(Enemy *enemy);
+    const EffectType effectType;
+
+    explicit Effect(EffectType effect, unsigned ticks = 10) : effectType(effect), ticksLeft(ticks) {};
+
+    void dealEffect(Entity *enemy);
 };
 
 #endif //OOPCPP_EFFECT_H
