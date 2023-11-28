@@ -63,9 +63,7 @@ vector<vector<int>> getDistances(vector<vector<TileType>> map, const Coordinates
             if (map[i][j] != Road) {
                 distances[i][j] = -1;
             }
-            std::cout << distances[i][j];
         }
-        std::cout << std::endl;
     }
 
     queue<Coordinates> traversalQueue;

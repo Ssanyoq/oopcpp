@@ -26,6 +26,6 @@ double calculateAngle(const Coordinates &from, const Coordinates &to);
 
 vector<vector<int>> getDistances(vector<vector<TileType>> map, const Coordinates &from);
 
-vector<Coordinates> getPath(const vector<vector<int>>& distances, int x, int y);
+vector<Coordinates> getPath(const vector<vector<int>>& distances, Coordinates to);
 
 #endif //LAB3_FUNCTIONS_H
