@@ -3,31 +3,52 @@
 
 #include <utility>
 #include <vector>
+#include <iostream>
+
+using std::cout;
 using std::vector;
+
 #include "../objects/tile.h"
 #include "../objects/castle.h"
-#include "../objects/lair.h"
+#include "../utility/matrix.h"
+#include "../utility/functions.h"
+#include "tile_type.h"
+#include "lair.h"
+
+class Lair;
 
 class Map {
 protected:
     vector<vector<Tile>> tiles;
-    Castle *castle;
-    vector<Lair> lairs;
-    unsigned width, height;
-    vector<vector<Coordinates>> routes;
+    Coordinates castlePos{};
+    vector<pair<Coordinates, Lair>> lairs;
+    unsigned width{}, height{};
+    vector<vector<Lair>> routes;
 
 
     void calculateRoutes();
-public:
-    unsigned getWidth() const {return width;};
-    unsigned getHeight() const {return height;};
 
-    Map(unsigned width, unsigned height): width(width), height(height), castle(){};
-    Map(vector<vector<Tile>> tiles);
+public:
+    Map(vector<vector<TileType>> map, Coordinates castle, const vector<Coordinates>& lairsPos);
+
+    unsigned getWidth() const { return width; };
+
+    unsigned getHeight() const { return height; };
+
+    Coordinates getCastle() const {return castlePos;};
+
+    void printMap() const;
+
     bool isAccurate();
-    void replan(std::vector<std::vector<Tile>> newTilesList) { tiles = std::move(newTilesList);
-        width = tiles.size(); height = tiles[0].size();};
-    Tile *getTile(int x, int y) const;
+
+    void replan(std::vector<std::vector<Tile>> newTilesList) {
+        tiles = std::move(newTilesList);
+        width = tiles.size();
+        height = tiles[0].size();
+    };
+
+    Tile getTile(int x, int y) const;
+    Tile getTile(Coordinates coordinates) const;
 };
 
 #endif //OOPCPP_MAP_H
