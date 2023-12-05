@@ -1,12 +1,9 @@
-//
-// Created by Aleksandr Kutsalo on 21.11.2023.
-//
-
 #ifndef LAB3_FUNCTIONS_H
 #define LAB3_FUNCTIONS_H
 
 #include "../objects/sprite.h"
 #include "../objects/tile_type.h"
+#include "path.h"
 
 #include "coords.h"
 #include <cmath>
@@ -26,6 +23,6 @@ double calculateAngle(const Coordinates &from, const Coordinates &to);
 
 vector<vector<int>> getDistances(vector<vector<TileType>> map, const Coordinates &from);
 
-vector<Coordinates> getPath(const vector<vector<int>>& distances, Coordinates to);
+Path getPath(const vector<vector<int>>& distances, Coordinates from);
 
 #endif //LAB3_FUNCTIONS_H

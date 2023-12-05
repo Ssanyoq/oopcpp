@@ -15,13 +15,13 @@ double calculateAngle(const Coordinates &from, const Coordinates &to) {
     return atan2(to.y - from.y, to.x - from.x);
 }
 
-vector<Coordinates> getPath(const vector<vector<int>> &distances, Coordinates to) {
+Path getPath(const vector<vector<int>> &distances, Coordinates from) {
     int deltaY[] = {-1, 0, 1, 0};
     int deltaX[] = {0, 1, 0, -1};
-    vector<Coordinates> reversedPath; // reversed!
-    auto curNum = distances[to.y][to.x];
-    auto curCoords = to;
-    reversedPath.push_back(to);
+    Path path; // from coordinates of point "from"
+    auto curNum = distances[from.y][from.x];
+    auto curCoords = from;
+    path.push_back(from);
 
     while (curNum != 0) {
         int minDist = -1;
@@ -43,11 +43,11 @@ vector<Coordinates> getPath(const vector<vector<int>> &distances, Coordinates to
         }
         curNum = minDist;
         curCoords = minCoords;
-        reversedPath.push_back(curCoords);
+        path.push_back(curCoords);
     }
-    vector<Coordinates> path;
-    for (int i = reversedPath.size() - 1; i >= 0; i--) {
-        path.push_back(reversedPath[i]);
+    path.pop_back(); // so that castle won't be a part of this path
+    if (path.size() == 1) {
+        path = Path(0);
     }
     return path;
 }
