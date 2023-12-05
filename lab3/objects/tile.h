@@ -2,26 +2,33 @@
 #ifndef OOPCPP_TILE_H
 #define OOPCPP_TILE_H
 
-#include "../utitlity/coords.h"
+#include "../utility/coords.h"
 #include "../objects/sprite.h"
+#include "../objects/placeable.h"
+#include "sprite.h"
+#include "tile_type.h"
 
-enum TileType {
-    Road,
-    Field,
-    Forest
-};
-
-class Tile: public Sprite {
+class Tile : public Sprite {
 protected:
-    Placeable *contents;
+    Placeable *contents = nullptr;
+public:
+    Placeable *getContents() const {
+        return contents;
+    }
+
+    void setContents(Placeable *contents) {
+        Tile::contents = contents;
+    }
+
+protected:
+    TileType tileType;
 public:
 
-    const TileType tileType;
+    TileType getType() const {
+        return tileType;
+    };
 
-    Tile(TileType type, Coordinates coords ): tileType(type){Sprite();};
-
-    Placeable *getContents()const { return contents;};
-    void setContents(Placeable *newContents) {contents = newContents;};
+    Tile(Coordinates coords, TileType type) : Sprite(coords, 0), tileType(type) {};
 };
 
 

@@ -17,25 +17,28 @@ using std::vector;
 
 class Lair;
 
+class Game;
+
 class Map {
 protected:
-    vector<vector<Tile>> tiles;
+    vector<vector<Tile>> tiles; // Stores tiles types
     Coordinates castlePos{};
-    vector<pair<Coordinates, Lair>> lairs;
+    Castle castle; // TODO
+    vector<Coordinates> lairs;
     unsigned width{}, height{};
-    vector<vector<Lair>> routes;
-
 
     void calculateRoutes();
 
 public:
-    Map(vector<vector<TileType>> map, Coordinates castle, const vector<Coordinates>& lairsPos);
+    Map(vector<vector<TileType>> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos);
 
     unsigned getWidth() const { return width; };
 
     unsigned getHeight() const { return height; };
 
-    Coordinates getCastle() const {return castlePos;};
+    Coordinates getCastleCoords() const {return castlePos;};
+
+    Castle &getCastle() {return castle;};
 
     void printMap() const;
 
@@ -47,8 +50,8 @@ public:
         height = tiles[0].size();
     };
 
-    Tile getTile(int x, int y) const;
-    Tile getTile(Coordinates coordinates) const;
+    Tile *getTile(int x, int y);
+    Tile *getTile(Coordinates coordinates);
 };
 
 #endif //OOPCPP_MAP_H

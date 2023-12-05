@@ -8,9 +8,9 @@ class Castle: public Placeable {
 protected:
     unsigned hp;
 public:
-    Castle(unsigned hp) : hp(hp), Placeable(<#initializer#>, 0, 0, 0) {};
+    Castle(unsigned hp, int x, int y) : hp(hp), Placeable(0, 0, 0) {};
     void receiveDamage(int amount);
-    int getHP() const {return hp};
+    int getHP() const {return hp;};
     bool isDead() const;
 };
 

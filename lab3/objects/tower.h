@@ -3,8 +3,9 @@
 
 #include "defence.h"
 #include "../effects/effect.h"
+#include "entity.h"
 
-    enum AttackStrategy {
+enum AttackStrategy {
     ClosestToCastle,
     ClosestToSelf,
     Fastest,
@@ -15,28 +16,27 @@
 
 class Tower : public Defence {
 protected:
-    int dps;
-    unsigned bulletSpeed;
-    unsigned fireRate;
-    unsigned penetration;
+    int damagePerShot;
     AttackStrategy strategy;
 
-    Tower(const Game &currentGame, const Tile &tile, AttackStrategy strat) {
-        Defence(Game, tile)
-    }
-    Entity *pickTarget();
-    // ..........
+    Tower(
+            const Tile &tile, AttackStrategy strat, int dps = 100) :
+            Defence(tile.getPos().x, tile.getPos().y, 0),
+            damagePerShot(dps), strategy(strat) {}
 
 public:
-    void shoot();
-    void setStrat(AttackStrategy newStrat);
+    void shoot(std::vector<Entity> entities); //
+    void setStrat(AttackStrategy newStrat) { strategy = newStrat; };
+    void doAction(std::vector<Entity> &entities);
 
 };
 
-class MagicTower: public Tower {
-protected:
-    void applyRandomEffect(Entity *target);
-
-};
+//class MagicTower: public Tower {
+//protected:
+//    MagicTower() {}
+//
+//    void applyRandomEffect(Entity *target);
+//
+//};
 
 #endif //OOPCPP_TOWER_H

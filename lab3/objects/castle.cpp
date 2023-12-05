@@ -9,8 +9,5 @@ void Castle::receiveDamage(int amount) {
 }
 
 bool Castle::isDead() const {
-    if (hp == 0) {
-        return true;
-    }
-    return false;
+    return hp <= 0;
 }

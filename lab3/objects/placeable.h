@@ -5,10 +5,10 @@
 
 class Placeable : public Sprite {
 public:
-    Placeable(const Game &currentGame, long long int x, long long int y, short rotation) : Sprite(currentGame, x, y,
-                                                                                                  rotation) {};
+    Placeable(long long int x, long long int y, short rotation) : Sprite(x, y,
+                                                                         rotation) {};
 
-    virtual void doAction() = 0;
-}
+    virtual void doAction() {};
+};
 
 #endif
