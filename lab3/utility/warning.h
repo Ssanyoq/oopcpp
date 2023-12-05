@@ -8,8 +8,6 @@
 #include <iostream>
 #include <string>
 
-void warn(const std::string msg) {
-    std::cout << "Warning: " << msg << endl;
-}
+void warn(const std::string& msg);
 
 #endif //LAB3_WARNING_H
