@@ -1,38 +1,75 @@
 #ifndef OOPCPP_ENTITY_H
 #define OOPCPP_ENTITY_H
 
-#include "../objects/sprite.h"
 #include "../effects/effect.h"
-#include "../objects/lair.h"
+#include "../objects/sprite.h"
+#include "../utility/coords.h"
+#include "../utility/path.h"
 #include <vector>
+#include <unordered_map>
+#include "castle.h"
 
-class Entity: public Sprite {
+class Entity : public Sprite {
 protected:
     unsigned level;
     unsigned hp;
-    int dps;
-    unsigned hitsPerSecond;
+    double damagePerTick;
+    bool isSpawned = false;
+    double speed; // tiles per tick
+    double tilesPassed;
     std::vector<Effect> activeEffects;
     unsigned deathCost;
+    bool atCastle = false;
+    Path path;
+    unsigned positionAtPath = -1;
 
-    bool isImmuneTo(const Effect &effect);
+    virtual bool isImmuneTo(const Effect &effect) { return false;};
 public:
-    unsigned getDeathCost();
-    void spawn(const Lair &target);
-    void move();
+    explicit Entity(
+           unsigned level=0, unsigned hp=100,
+           int dpt=100, unsigned speed=0,
+           unsigned deathCost=10) : Sprite(-1, -1, 0),
+                                    level(level), hp(hp), damagePerTick(dpt), speed(speed),
+                                    deathCost(deathCost) {};
+
+    unsigned getDeathCost() {return deathCost;};
+
+    void move(Castle &castle);
+
     void useEffects();
-    void recieveDamage(int amount);
-    unsigned getHPAmount();
+
+    void spawn(Path lairPath);
+
+    void getEffect(Effect newEffect);
+
+    void receiveDamage(int amount);
+
+    unsigned getHPAmount() const;
+
+    bool isAlive() const;
+
+    friend class Effect;
 };
 
-class Zombie: public Entity {
+class Zombie : public Entity {
 public:
-    Zombie();
+    explicit Zombie(): Entity(){};
+    bool isImmuneTo(const Effect &effect) override {
+        switch (effect.effectType) {
+            case Slowness:
+                break;
+            case Fatigue:
+                break;
+            case Poison:
+                return true;
+        }
+        return false;
+    }
 };
 
-class JetpackZombie: public Entity {
+class JetpackZombie : public Zombie {
 public:
-    JetpackZombie();
+    JetpackZombie(): Zombie(){};
 };
 
 #endif //OOPCPP_ENTITY_H
