@@ -10,7 +10,7 @@ using std::vector;
 
 #include "../objects/tile.h"
 #include "../objects/castle.h"
-#include "../utility/matrix.h"
+#include "../matrix/matrix.h"
 #include "../utility/functions.h"
 #include "tile_type.h"
 #include "lair.h"
@@ -23,7 +23,7 @@ class Map {
 protected:
     vector<vector<Tile>> tiles; // Stores tiles types
     Coordinates castlePos{};
-    Castle castle; // TODO
+    Castle castle;
     vector<Coordinates> lairs;
     unsigned width{}, height{};
 
