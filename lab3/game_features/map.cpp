@@ -2,15 +2,15 @@
 #include "../utility/warning.h"
 
 
-Map::Map(vector<vector<TileType>> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos):
+Map::Map(vector<vector<TileType>> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos) :
         castle(100, castleCoords.x, castleCoords.y)
     {
     tiles = vector<vector<Tile>>(map.size(), vector<Tile>(map[0].size(),
                                                           Tile(Coordinates{.x = -1, .y = -1}, Road)));
 
-    for (int i = 0; i < tiles.size(); i++) {
-        for (int j = 0; j < tiles[i].size(); j++) {
-            tiles[i][j] = Tile(Coordinates{.x = j, .y = i}, map[i][j]);
+    for (int y = 0; y < tiles.size(); y++) {
+        for (int x = 0; x < tiles[y].size(); x++) {
+            tiles[y][x] = Tile(Coordinates{.x = x, .y = y}, map[y][x]);
         }
     }
     height = map.size();
@@ -28,24 +28,24 @@ Map::Map(vector<vector<TileType>> map, Coordinates castleCoords, const vector<Co
             warn("Castle is placed at this place, can't place lairs");
             continue;
         }
-        Lair newLair(x, y);
+        Lair *newLair = new Lair(x, y);
         lairs.emplace_back(lairsPos[i]);
-        tiles[y][x].setContents(&(newLair));
+        tiles[y][x].setContents(newLair);
     }
 
     calculateRoutes();
 }
 
 void Map::printMap() const {
-    for (int i = 0; i < tiles.size(); i++) {
-        for (int j = 0; j < tiles[i].size(); j++) {
-            if (castlePos.x == j && castlePos.y == i) {
+    for (int y = 0; y < tiles.size(); y++) { // y
+        for (int x = 0; x < tiles[y].size(); x++) { // x
+            if (castlePos.x == x && castlePos.y == y) {
                 cout << "C";
                 continue;
             }
             bool isLair = false;
-            for (int k = 0; k < lairs.size(); k++) {
-                if (lairs[k].x == j && lairs[k].y == i) {
+            for (int lairIndex = 0; lairIndex < lairs.size(); lairIndex++) {
+                if (lairs[lairIndex].x == x && lairs[lairIndex].y == y) {
                     cout << "L";
                     isLair = true;
                     break;
@@ -54,11 +54,12 @@ void Map::printMap() const {
             if (isLair) {
                 continue;
             }
-            if (tiles[i][j].getContents() != nullptr) {
+            if (tiles[y][x].getContents() != nullptr) {
                 cout << "P";
                 continue;
             }
-            switch (tiles[i][j].getType()) {
+//            switch (this->getTile(x, y)->getType()) {
+            switch (tiles[y][x].getType()) {
                 case Road:
                     cout << ".";
                     break;
@@ -84,7 +85,6 @@ void Map::calculateRoutes() {
     }
     auto distances = getDistances(types, castlePos);
     for (auto & lair : lairs) {
-
         (*dynamic_cast<Lair *>((tiles[lair.y][lair.x].getContents()))).setPath(getPath(distances, lair));
     }
 }
@@ -109,7 +109,7 @@ bool Map::isAccurate() {
 Tile *Map::getTile(int x, int y) {
     if (tiles.size() > x) {
         if (tiles[x].size() > y) {
-            return &(tiles[x][y]);
+            return &(tiles[y][x]);
         }
     }
     throw std::out_of_range("Tile with this index is yet to be defined");
