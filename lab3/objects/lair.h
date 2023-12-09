@@ -31,6 +31,7 @@ protected:
     unsigned currentIndex = 0;
 
 public:
+    Lair(): Placeable(-1, -1, 0), queue(), pathToCastle() {};
     Lair(long long int x, long long int y) : Placeable(x, y, 0), queue(), pathToCastle() {};
     void resetQueue(LairQueue newQueue);
     void addToQueue(Entity newEntity, unsigned delay=10);
@@ -38,6 +39,8 @@ public:
     void tick();
     void setPath(Path newPath);
     Path getPath() const { return pathToCastle;}
+    const LairQueue &getQueue() const;
+
 };
 
 #endif

@@ -31,3 +31,7 @@ void Lair::tick() {
 void Lair::setPath(Path newPath) {
     pathToCastle = std::move(newPath);
 }
+
+const LairQueue &Lair::getQueue() const {
+    return queue;
+}
