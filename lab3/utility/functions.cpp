@@ -46,9 +46,9 @@ Path getPath(const vector<vector<int>> &distances, Coordinates from) {
         path.push_back(curCoords);
     }
     path.pop_back(); // so that castle won't be a part of this path
-    if (path.size() == 1) {
-        path = Path(0);
-    }
+//    if (path.size() == 1) {
+//        path = Path(0);
+//    }
     return path;
 }
 

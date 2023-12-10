@@ -3,7 +3,7 @@
 #include <utility>
 
 void Entity::useEffects() {
-    for (int i = 0; i < activeEffects.size(); i++) { // FIXME
+    for (int i = 0; i < activeEffects.size(); i++) {
         auto effectNumbers = activeEffects[i].dealEffect();
 
         receiveDamage(effectNumbers[HealthDecrease]);

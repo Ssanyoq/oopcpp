@@ -20,6 +20,8 @@ public:
 
     Coordinates getPos() const { return position; };
 
+    short getRotationDegree() const { return rotationDegree; }
+
     void dummyDraw() const {};
 
     void changeVisibility(bool isInvisible);

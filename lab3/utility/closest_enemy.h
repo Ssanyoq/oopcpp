@@ -1,4 +1,3 @@
-
 #ifndef LAB3_CLOSEST_ENEMY_H
 #define LAB3_CLOSEST_ENEMY_H
 
@@ -6,6 +5,6 @@
 #include <vector>
 using std::vector;
 
-int findClosestEntity(vector<Entity> entities);
+int findClosestEntity(Coordinates from, vector<Entity> entities);
 
 #endif //LAB3_CLOSEST_ENEMY_H

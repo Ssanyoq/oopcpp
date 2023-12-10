@@ -9,11 +9,17 @@ void Lair::doAction() {
 
 void Lair::resetQueue(LairQueue newQueue) {
     queue = std::move(newQueue);
+    for (int i = 1; i < queue.size(); i++) {
+        if (queue[i].second == 0) {
+            queue[i].second = 1;
+        }
+        queue[i].second += queue[i - 1].second;
+    }
     ticks = 0;
     currentIndex = 0;
 }
 
-void Lair::addToQueue(Entity newEntity, unsigned delay) {
+void Lair::addToQueue(const Entity& newEntity, unsigned delay) {
     queue.emplace_back(pair<Entity, int>(newEntity, delay));
     if (queue.size() > 1) {
         queue[queue.size() - 1].second += queue[queue.size() - 2].second;

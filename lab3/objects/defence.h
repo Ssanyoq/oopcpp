@@ -10,8 +10,8 @@ protected:
     unsigned currentLevel;
     unsigned range;
 public:
-    Defence(long long int x,
-            long long int y, short rotation) : range(0), currentLevel(1), Placeable(x, y, rotation) {};
+    Defence(long long int x, long long int y, short rotation, unsigned range)
+            : range(range), currentLevel(1), Placeable(x, y, rotation) {};
 
     static bool isActive() { return false; };
 

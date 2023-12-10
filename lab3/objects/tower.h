@@ -2,33 +2,23 @@
 #define OOPCPP_TOWER_H
 
 #include "defence.h"
-#include "../effects/effect.h"
-#include "entity.h"
+#include "effect.h"
+#include "tower_strategies.h"
 
-enum AttackStrategy {
-    ClosestToCastle,
-    ClosestToSelf,
-    Fastest,
-    Slowest,
-    WithMostHP,
-    WithMostDMG
-};
+class Entity;
 
 class Tower : public Defence {
 protected:
     int damagePerShot;
     AttackStrategy strategy;
-
-    Tower(
-            const Tile &tile, AttackStrategy strat, int dps = 100) :
-            Defence(tile.getPos().x, tile.getPos().y, 0),
-            damagePerShot(dps), strategy(strat) {}
-
 public:
-    void shoot(std::vector<Entity> entities); //
-    void setStrat(AttackStrategy newStrat) { strategy = newStrat; };
-    void doAction(std::vector<Entity> &entities);
+    void shoot(std::vector<Entity> &entities); //
+    void setStrategy(AttackStrategy strategy);
+    void doAction(std::vector<Entity> &entities) override;
 
+    Tower(ll x, ll y, int dps = 100, AttackStrategy strat = ClosestToSelf, int range=10) :
+            Defence(x, y, 0, 10),
+            damagePerShot(dps), strategy(strat) {}
 };
 
 //class MagicTower: public Tower {

@@ -16,7 +16,7 @@ protected:
     double damagePerTick;
     bool isSpawned = false;
     double speed; // tiles per tick
-    double tilesPassed;
+    double tilesPassed{};
     std::vector<Effect> activeEffects;
     unsigned deathCost;
     bool atCastle = false;
@@ -25,14 +25,12 @@ protected:
 
     virtual bool isImmuneTo(const Effect &effect) { return false;};
 public:
-    explicit Entity(
-           unsigned level=0, unsigned hp=100,
-           int dpt=100, unsigned speed=0,
-           unsigned deathCost=10) : Sprite(-1, -1, 0),
+    explicit Entity(unsigned int hp = 100, int dpt = 100, unsigned int speed = 1, unsigned int deathCost = 10,
+                    unsigned int level = 0) : Sprite(-1, -1, 0),
                                     level(level), hp(hp), damagePerTick(dpt), speed(speed),
                                     deathCost(deathCost) {};
 
-    unsigned getDeathCost() {return deathCost;};
+    unsigned getDeathCost() const {return deathCost;};
 
     void move(Castle &castle);
 
@@ -53,7 +51,7 @@ public:
 
 class Zombie : public Entity {
 public:
-    explicit Zombie(): Entity(){};
+    explicit Zombie(): Entity() {};
     bool isImmuneTo(const Effect &effect) override {
         switch (effect.effectType) {
             case Slowness:

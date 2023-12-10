@@ -16,7 +16,7 @@ protected:
     void deletePlaceable(int index);
 public:
     void addEntity( Entity& newEntity);
-    void addDefence( Defence *newDefence); // TODO
+    void addDefence( Defence *newDefence);
 
     Map & getCurrentMap();
 
