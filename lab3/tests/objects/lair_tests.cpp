@@ -48,7 +48,7 @@ TEST_CASE("Lair Path Operations") {
                      Coordinates{.x = 2, .y = 1},
                      Coordinates{.x = 1, .y = 1},
                      Coordinates{.x = 1, .y = 0}};
-        lair.setPath(std::move(path));
+        lair.setPath(path);
 
         REQUIRE(lair.getPath().size() == path.size());
         REQUIRE(lair.getPath()[3].x == 2);
