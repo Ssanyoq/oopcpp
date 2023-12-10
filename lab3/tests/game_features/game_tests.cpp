@@ -23,7 +23,7 @@ TEST_CASE("Game testing") {
     auto entity = Entity(100);
     game.addEntity(entity);
 
-    auto defence = new Tower(0, 0);
+    auto defence = new Tower(0, 0, 10);
     game.addDefence(defence);
     auto trap = new Trap(Poison);
     game.addDefence(trap);
