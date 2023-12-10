@@ -37,6 +37,7 @@ add_library(objects
         objects/tile.h
         objects/tower.cpp
         objects/tower.h
+        objects/tower_strategies.h
         objects/trap.cpp
         objects/trap.h
         objects/sprite.cpp
@@ -45,13 +46,16 @@ add_library(objects
 add_library(entities
         entities/entity.h
         entities/entity.cpp)
+
 target_link_libraries(entities objects)
 target_link_libraries(entities effects)
+target_link_libraries(game_features objects)
+
 add_library(utility
         utility/coords.h
         utility/functions.cpp
         utility/functions.h
-        utility/matrix.h
+        matrix/matrix.h
         utility/path.h
         utility/warning.h
         utility/closest_enemy.h
@@ -90,11 +94,19 @@ target_link_libraries(lab3
 add_library(catch2
         tests/catch2/catch_amalgamated.hpp
         tests/catch2/catch_amalgamated.cpp
-        )
+
+)
 
 add_executable(test
         tests/utility/functions_tests.cpp
-        tests/game_features/map_tests.cpp)
+        tests/game_features/map_tests.cpp
+        tests/game_features/game_tests.cpp
+        tests/objects/lair_tests.cpp
+        tests/entity/entity_tests.cpp
+        tests/objects/castle_tests.cpp
+        tests/objects/tower_tests.cpp
+        tests/objects/trap_tests.cpp
+)
 
 target_link_libraries(test
         catch2
