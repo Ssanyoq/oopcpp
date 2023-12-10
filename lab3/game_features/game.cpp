@@ -1,17 +1,22 @@
 #include "game.h"
 
+#include <utility>
+#include "../utility/warning.h"
+
 
 Game::Game() = default;
 
 void Game::addEntity(Entity& newEntity) {
     entities.push_back(newEntity);
 }
-void Game::addDefence(Defence &newDefence) {
-    auto tile = currentMap.getTile(newDefence.getPos()); // TODO pointer
+void Game::addDefence(Defence *newDefence) {
+    auto tile = currentMap.getTile(newDefence->getPos());
     if (tile->getContents() == nullptr) {
-        tile->setContents((Placeable *) &newDefence);
+        tile->setContents((Placeable *) newDefence);
+        placeables.push_back(newDefence);
+    } else {
+        warn("Can't place defence here!");
     }
-    placeables.push_back(newDefence);
 }
 
 void Game::deleteEntity(int index) {
@@ -25,7 +30,7 @@ void Game::deletePlaceable(int index) {
     if (index < 0 or index > placeables.size() - 1) {
         throw std::out_of_range("Object with this index does not exist");
     }
-    currentMap.getTile(placeables[index].getPos())->setContents(nullptr);
+    currentMap.getTile(placeables[index]->getPos())->setContents(nullptr);
     placeables.erase(placeables.begin() + index);
 }
 
@@ -40,7 +45,7 @@ void Game::moveEntities() {
 }
 void Game::usePlaceables() {
     for (auto & placeable : placeables) {
-        placeable.doAction();
+        placeable->doAction();
     }
 }
 
@@ -50,9 +55,17 @@ void Game::process() {
 
 }
 
-bool Game::place(const Placeable& newObject, int x, int y) {
-    placeables.push_back(newObject);
-    return true; //TODO
+
+Map & Game::getCurrentMap() {
+    return currentMap;
+}
+
+
+
+void Game::changeMap(Map newMap) {
+    currentMap = std::move(newMap);
+    entities = {};
+    placeables = {};
 }
 
 

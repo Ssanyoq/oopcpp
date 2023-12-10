@@ -11,17 +11,21 @@ class Game {
 protected:
     void moveEntities();
     void usePlaceables();
-    void addEntity( Entity& newEntity);
-    void addDefence( Defence &newDefence); // TODO
+    Map currentMap = Map({{Road}}, {.x = 0, .y = 0}, {});
     void deleteEntity(int index);
     void deletePlaceable(int index);
 public:
+    void addEntity( Entity& newEntity);
+    void addDefence( Defence *newDefence); // TODO
+
+    Map & getCurrentMap();
+
+    void changeMap(Map newMap);
     std::vector<Entity> entities;
-    std::vector<Placeable> placeables;
-    Map currentMap = Map({{Road}}, {.x = 0, .y = 0}, {});
+    std::vector<Placeable *> placeables;
+
     Game();
     void process();
-    bool place(const Placeable &newObject, int x, int y);
 };
 
 #endif //OOPCPP_GAME_H
