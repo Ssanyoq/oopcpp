@@ -3,6 +3,7 @@
 
 #include "defence.h"
 #include "../effects/effect.h"
+#include "../utility/closest_enemy.h"
 
 
 class Trap : public Defence {
@@ -14,14 +15,13 @@ public:
     Trap(EffectType effect, ll x = 0, ll y = 0, short rotation = 0,
     unsigned int effectDuration = 10
     ) :
-    Defence(x, y, rotation),
+            Defence(x, y, rotation, 10),
     effect(effect, effectDuration) {}
 
-    void dealEffect(std::vector<Entity> entities);
+    void dealEffect(std::vector<Entity> &entities);
 
-    void doAction(std::vector<Entity> &entities);
+    void doAction(std::vector<Entity> &entities) override;
 
-    bool isActive() { return true; };
 };
 
 #endif //OOPCPP_TRAP_H
