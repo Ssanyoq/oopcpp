@@ -3,6 +3,7 @@ project(lab3)
 
 set(CMAKE_CXX_STANDARD 14)
 
+
 include_directories(effects)
 include_directories(entities)
 include_directories(game_features)
@@ -62,6 +63,7 @@ add_library(utility
         utility/closest_enemy.cpp
         utility/warning.cpp
         utility/entity_enum.h
+        matrix/matrix_iterator.h
 )
 
 
@@ -83,13 +85,34 @@ add_executable(lab3
         config.h
 )
 
+# Specify the include directories
+#target_include_directories(lab3 PRIVATE /opt/homebrew/Cellar/sfml/2.6.1/include)
+
+# Specify the library directories
+#link_directories(/opt/homebrew/Cellar/sfml/2.6.1/lib)
+
+find_package(SFML 2.6.1 COMPONENTS graphics audio  REQUIRED)
+
 target_link_libraries(lab3
         game_features
         effects
         objects
         entities
         utility
+        sfml-graphics
+        sfml-window
+        sfml-system
 )
+
+# SFML
+
+# g++ main.cpp -I/opt/homebrew/Cellar/sfml/2.6.1/include
+# -o prog -L/opt/homebrew/Cellar/sfml/2.6.1/lib -lsfml-graphics -lsfml-window -lsfml-system
+
+
+
+# Specify the libraries to link against using keyword syntax
+#target_link_libraries(lab3 PRIVATE )
 
 add_library(catch2
         tests/catch2/catch_amalgamated.hpp
@@ -114,4 +137,5 @@ target_link_libraries(test
         effects
         objects
         entities
-        utility)
+        utility
+)

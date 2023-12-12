@@ -1,36 +1,24 @@
+#include <SFML/Graphics.hpp>
 
-#include "utility/functions.h"
-#include "tile_type.h"
-#include "map.h"
-#include <iostream>
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color(0xc0ffee));
 
-using std::cout;
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
 
-int main() {
-    vector<vector<TileType>> map = {{Road,  Road, Road},
-                                    {Field,  Field, Road},
-                                    {Road, Field, Road}};
+        window.clear();
+        window.draw(shape);
+        window.display();
+    }
 
-    Map m(map, Coordinates{.x = 0, .y = 0},{Coordinates{.x = 2, .y = 0}});
-    m.printMap();
-//    cout << typeid(m).name() << std::endl;
-
-//    auto out = getDistances(map, Coordinates{.x=0, .y=0});
-//    for (int i = 0; i < out.size(); i++) {
-//        for (int j = 0; j < out[i].size(); j++) {
-//            if (out[i][j] == -1) {
-//                cout << '#';
-//            } else {
-//                cout << out[i][j];
-//            }
-//        }
-//        cout << std::endl;
-//    }
-//    cout << std::endl;
-//    auto out2 = getPath(out, Coordinates{.x = 2, .y = 2});
-//    for (int i = 0; i < out2.size(); i++) {
-//        cout << out2[i].x << "," << out2[i].y << std::endl;
-//    }
-//    Map map1(map, Coordinates{.x = 0, .y = 0}, {Coordinates{.x = 2, .y = 2}});
-//    map1.printMap();
+    return 0;
 }
