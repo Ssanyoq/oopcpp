@@ -21,7 +21,7 @@ class Game;
 
 class Map {
 protected:
-    vector<vector<Tile>> tiles; // Stores tiles types
+    Matrix<Tile> tiles; // Stores tiles types
     Coordinates castlePos{};
     Castle castle;
     vector<Coordinates> lairs;
@@ -30,7 +30,7 @@ protected:
     void calculateRoutes();
 
 public:
-    Map(vector<vector<TileType>> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos);
+    Map(Matrix<TileType> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos);
 
     unsigned getWidth() const { return width; };
 
@@ -44,10 +44,10 @@ public:
 
     bool isAccurate();
 
-    void replan(std::vector<std::vector<Tile>> newTilesList) {
-        tiles = std::move(newTilesList);
-        width = tiles.size();
-        height = tiles[0].size();
+    void replan(Matrix<Tile>& newTilesList) {
+        tiles = newTilesList;
+        width = tiles.getWidth();
+        height = tiles.getHeight();
     };
 
     Tile *getTile(int x, int y);

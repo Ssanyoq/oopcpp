@@ -9,7 +9,8 @@ TEST_CASE("Map initialization and tests") {
                                         {Road,  Road, Road},
                                         {Field, Road, Road}};
     REQUIRE(true);
-    Map map(mapTypes, Coordinates{.x = 0, .y = 0}, {Coordinates{.x = 2, .y = 0},
+    Map map(Matrix<TileType>(mapTypes),
+            Coordinates{.x = 0, .y = 0}, {Coordinates{.x = 2, .y = 0},
                                                     Coordinates {.x = 0, .y = 1}});
 
     map.printMap();

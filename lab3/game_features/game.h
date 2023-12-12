@@ -11,7 +11,7 @@ class Game {
 protected:
     void moveEntities();
     void usePlaceables();
-    Map currentMap = Map({{Road}}, {.x = 0, .y = 0}, {});
+    Map currentMap = Map(Matrix<TileType>({{Road}}), {.x = 0, .y = 0}, {});
     void deleteEntity(int index);
     void deletePlaceable(int index);
 public:

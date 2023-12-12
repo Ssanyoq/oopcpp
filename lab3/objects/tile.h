@@ -29,6 +29,8 @@ public:
     };
 
     Tile(Coordinates coords, TileType type) : Sprite(coords, 0), tileType(type) {};
+
+    Tile() : tileType(Forest), Sprite(Coordinates{.x=-1, .y=-1}, 0) {};
 };
 
 

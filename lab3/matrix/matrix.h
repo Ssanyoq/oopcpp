@@ -6,17 +6,51 @@
 
 template<typename T>
 class Matrix {
+    /**
+     * 2-dimensional matrix of any type
+     */
 private:
-    const size_t width;
-    const size_t height;
+    unsigned long width;
+    unsigned long height;
 
     T **data;
 
 public:
-    size_t getWidth() const {return width;};
-    size_t getHeight() const  {return height;};
+    size_t getWidth() const
+    /**
+     * @returns width of matrix
+     */
+     {return width;};
 
-    Matrix(size_t width, size_t height, T filler=T()): width(width), height(height){
+    size_t getHeight() const
+    /**
+     * @returns height of matrix
+     */
+    {return height;};
+
+    explicit Matrix(std::vector<std::vector<T>> map)
+    /**
+     * vector to matrix transformer, mostly for tests
+     */
+    {
+        height = map.size();
+        width = map[0].size();
+        data = new T*[height];
+        for (size_t i = 0; i < height; i++) {
+            data[i] = new T[width];
+            for (int j = 0; j < width; j++) {
+                data[i][j] = map[i][j];
+            }
+        }
+    }
+
+    Matrix(size_t width, size_t height, T filler=T()): width(width), height(height)
+    /**
+     * @param width  width of new matrix
+     * @param height height of new matrix
+     * @param filler element that will be used to fill
+     */
+    {
         data = new T*[height];
         for (size_t i = 0; i < height; i++) {
             data[i] = new T[width];
@@ -42,8 +76,8 @@ public:
             delete[] data;
 
             // Copy the width and height
-            width = other.width;
-            height = other.height;
+            width = other.getWidth();
+            height = other.getHeight();
 
             // Allocate memory for the new matrix
             data = new T*[height];
@@ -64,14 +98,21 @@ public:
         return data[index];
     };
 
-    T &operator[](Coordinates elementPos) {
+    T &operator[](Coordinates elementPos) const {
+        if (elementPos.y >= height || elementPos.y < 0 || elementPos.x < 0 || elementPos.x >= width) {
+            throw std::out_of_range("Coordinates are out of range");
+        }
+        return data[elementPos.y][elementPos.x];
+    };
+
+    T *&operator[](Coordinates elementPos) {
         if (elementPos.y >= height || elementPos.y < 0 || elementPos.x < 0 || elementPos.x >= width) {
             throw std::out_of_range("Coordinates are out of range");
         }
         return data[elementPos.y][elementPos.x];
     }
 
-    size_t size() {
+    size_t size() const {
         return height;
     }
 

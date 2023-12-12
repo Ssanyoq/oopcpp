@@ -10,7 +10,8 @@ TEST_CASE("Game testing") {
                                          {Road,  Road, Road},
                                          {Field, Road, Road}};
     REQUIRE(true);
-    Map map(mapTypes, Coordinates{.x = 0, .y = 0}, {Coordinates{.x = 1, .y = 0},
+    Map map(Matrix<TileType>(mapTypes),
+            Coordinates{.x = 0, .y = 0}, {Coordinates{.x = 1, .y = 0},
                                                     Coordinates {.x = 0, .y = 1}});
 
     game.changeMap(map);

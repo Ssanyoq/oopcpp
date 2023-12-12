@@ -2,19 +2,21 @@
 #include "../utility/warning.h"
 
 
-Map::Map(vector<vector<TileType>> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos) :
-        castle(100, castleCoords.x, castleCoords.y)
+Map::Map(Matrix<TileType> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos) :
+        castle(100, castleCoords.x, castleCoords.y), tiles(map.getWidth(),
+                                                           map.getHeight(),
+                                                           Tile(Coordinates{.x=-1, .y=-1}, Forest))
     {
-    tiles = vector<vector<Tile>>(map.size(), vector<Tile>(map[0].size(),
-                                                          Tile(Coordinates{.x = -1, .y = -1}, Road)));
+//    tiles(map.size(), vector<Tile>(map[0].size(),
+//                                                          Tile(Coordinates{.x = -1, .y = -1}, Road)));
 
-    for (int y = 0; y < tiles.size(); y++) {
-        for (int x = 0; x < tiles[y].size(); x++) {
+    for (int y = 0; y < tiles.getHeight(); y++) {
+        for (int x = 0; x < tiles.getWidth(); x++) {
             tiles[y][x] = Tile(Coordinates{.x = x, .y = y}, map[y][x]);
         }
     }
-    height = map.size();
-    width = map[0].size();
+    height = map.getHeight();
+    width = map.getWidth();
     tiles[castleCoords.y][castleCoords.x].setContents(&castle);
 
     for (int i = 0; i < lairsPos.size(); i++) {
@@ -37,8 +39,8 @@ Map::Map(vector<vector<TileType>> map, Coordinates castleCoords, const vector<Co
 }
 
 void Map::printMap() const {
-    for (int y = 0; y < tiles.size(); y++) { // y
-        for (int x = 0; x < tiles[y].size(); x++) { // x
+    for (int y = 0; y < tiles.getHeight(); y++) { // y
+        for (int x = 0; x < tiles.getWidth(); x++) { // x
             if (castlePos.x == x && castlePos.y == y) {
                 cout << "C";
                 continue;
@@ -54,12 +56,12 @@ void Map::printMap() const {
             if (isLair) {
                 continue;
             }
-            if (tiles[y][x].getContents() != nullptr) {
+            if (tiles[Coordinates{.x=x,.y=y}].getContents() != nullptr) {
                 cout << "P";
                 continue;
             }
 //            switch (this->getTile(x, y)->getType()) {
-            switch (tiles[y][x].getType()) {
+            switch (tiles[Coordinates{.x=x,.y=y}].getType()) {
                 case Road:
                     cout << ".";
                     break;
@@ -94,7 +96,7 @@ bool Map::isAccurate() {
         return false;
     }
     for (int i = 0; i < tiles.size(); i++) {
-        if (tiles[i].size() != width) {
+        if (tiles.getWidth() != width) {
             return false;
         }
     }
@@ -107,8 +109,8 @@ bool Map::isAccurate() {
 }
 
 Tile *Map::getTile(int x, int y) {
-    if (tiles.size() > x) {
-        if (tiles[x].size() > y) {
+    if (tiles.getWidth() > x) {
+        if (tiles.getHeight() > y) {
             return &(tiles[y][x]);
         }
     }
