@@ -16,9 +16,7 @@ public:
         return contents;
     }
 
-    void setContents(Placeable *contents) {
-        Tile::contents = contents;
-    }
+    void setContents(Placeable *contents);
 
 protected:
     TileType tileType;
@@ -32,6 +30,8 @@ public:
 
     Tile() : tileType(Forest), Sprite(Coordinates{.x=-1, .y=-1}, 0) {};
 };
+
+
 
 
 #endif
