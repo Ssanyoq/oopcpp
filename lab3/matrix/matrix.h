@@ -4,6 +4,8 @@
 #include "../utility/coords.h"
 #include <vector>
 
+
+
 template<typename T>
 class Matrix {
     /**
@@ -13,12 +15,13 @@ private:
     unsigned long width;
     unsigned long height;
 
-    T **data;
+    T *data;
 
 public:
     size_t getWidth() const
     /**
      * @returns width of matrix
+     *
      */
      {return width;};
 
@@ -28,6 +31,7 @@ public:
      */
     {return height;};
 
+
     explicit Matrix(std::vector<std::vector<T>> map)
     /**
      * vector to matrix transformer, mostly for tests
@@ -35,11 +39,10 @@ public:
     {
         height = map.size();
         width = map[0].size();
-        data = new T*[height];
+        data = new T[height * width];
         for (size_t i = 0; i < height; i++) {
-            data[i] = new T[width];
             for (int j = 0; j < width; j++) {
-                data[i][j] = map[i][j];
+                data[i * width + j] = map[i][j];
             }
         }
     }
@@ -51,28 +54,21 @@ public:
      * @param filler element that will be used to fill
      */
     {
-        data = new T*[height];
-        for (size_t i = 0; i < height; i++) {
-            data[i] = new T[width];
-            std::fill(data[i], data[i] + width, filler); // Fill the row with the filler value
+        data = new T[height * width];
+        for (auto i = 0; i < height * width; i++) {
+            data[i] = filler;
         }
     };
-
     Matrix(const Matrix& other) : width(other.width), height(other.height) {
         // Allocate memory for the new matrix
-        data = new T*[height];
-        for (size_t i = 0; i < height; i++) {
-            data[i] = new T[width];
-            // Copy the elements from the other matrix
-            std::copy(other.data[i], other.data[i] + width, data[i]);
+        data = new T[height * width];
+        for (size_t i = 0; i < height * width; i++) {
+            data[i] = other.data[i];
         }
     }
     Matrix<T>& operator=(const Matrix& other) {
         if (this != &other) {  // Check for self-assignment
             // Deallocate existing memory
-            for (size_t i = 0; i < height; i++) {
-                delete[] data[i];
-            }
             delete[] data;
 
             // Copy the width and height
@@ -80,46 +76,105 @@ public:
             height = other.getHeight();
 
             // Allocate memory for the new matrix
-            data = new T*[height];
-            for (size_t i = 0; i < height; i++) {
-                data[i] = new T[width];
+            data = new T[height * width];
+            for (size_t i = 0; i < height * width; i++) {
                 // Copy the elements from the other matrix
-                std::copy(other.data[i], other.data[i] + width, data[i]);
+                data[i] = other.data[i];
             }
         }
 
         return *this;
     }
 
-    T *&operator[](int index) {
+    T *operator[](int index) {
         if (index >= height || index < 0) {
             throw std::out_of_range("Index is out of range");
         }
-        return data[index];
+        return &(data[index * width]);
     };
 
     T &operator[](Coordinates elementPos) const {
         if (elementPos.y >= height || elementPos.y < 0 || elementPos.x < 0 || elementPos.x >= width) {
             throw std::out_of_range("Coordinates are out of range");
         }
-        return data[elementPos.y][elementPos.x];
+        return data[elementPos.y * width + elementPos.x];
     };
 
     T *&operator[](Coordinates elementPos) {
         if (elementPos.y >= height || elementPos.y < 0 || elementPos.x < 0 || elementPos.x >= width) {
             throw std::out_of_range("Coordinates are out of range");
         }
-        return data[elementPos.y][elementPos.x];
+        return data[elementPos.y * width + elementPos.x];
     }
 
     size_t size() const {
         return height;
     }
 
-    virtual ~Matrix() {
-        for (int i = 0; i < height; i++) {
-            delete data[i];
+    void addToBottom(unsigned n, T filler=T()) {
+
+        auto newData = new T[width * (height + n)];
+        for (int i = 0; i < width * height; i++) {
+            newData[i] = data[i];
         }
+
+        for (int i = width * height; i < width * (height + n); i++) {
+            newData[i] = filler;
+        }
+        height += n;
+        delete data;
+        data = newData;
+    }
+    void addToTop(unsigned n, T filler=T()) {
+
+        auto newData = new T[width * (height + n)];
+        for (int i = 0; i < width * n; i++) {
+            newData[i] = filler;
+        }
+        for (int i = width * n; i < width * (height + n); i++) {
+            newData[i] = data[i];
+        }
+        height += n;
+        delete data;
+        data = newData;
+    }
+
+    void addToLeft(unsigned n, T filler=T()) {
+
+        auto newData = new T[(width + n) * height];
+
+        for (int i = 0; i < (width + n) * height; i++) {
+            if (i % (width + n) < n) {
+                newData[i] = filler;
+            } else {
+                cout << "Copied at i = " << i << std::endl;
+                newData[i] = data[i - (i / (width + n) + 1) * n];
+            }
+        }
+        width += n;
+        delete data;
+        data = newData;
+    }
+
+    void addToRight(unsigned n, T filler=T()) {
+
+        auto newData = new T[(width + n) * height];
+
+        for (int i = 0; i < (width + n) * height; i++) {
+            if (i % (width + n) >= width) {
+                newData[i] = filler;
+            } else {
+                cout << "Copied at i = " << i << std::endl;
+                newData[i] = data[i - (i / (width + n)) * n];
+            }
+        }
+        width += n;
+        delete data;
+        data = newData;
+    }
+
+
+    virtual ~Matrix() {
         delete[] data;
     }
 
