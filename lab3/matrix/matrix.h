@@ -132,7 +132,7 @@ public:
             newData[i] = filler;
         }
         for (int i = width * n; i < width * (height + n); i++) {
-            newData[i] = data[i];
+            newData[i] = data[i - (width * n)];
         }
         height += n;
         delete data;
