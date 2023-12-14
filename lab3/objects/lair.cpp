@@ -3,8 +3,9 @@
 #include <utility>
 #include "../utility/warning.h"
 
-void Lair::doAction() {
-    warn("Nothing happened, use tick() method to progress!");
+void Lair::doAction(std::vector<Entity> &entities) {
+    tick();
+//    warn("Nothing happened, use tick() method to progress!");
 }
 
 void Lair::resetQueue(LairQueue newQueue) {
@@ -28,11 +29,17 @@ void Lair::addToQueue(const Entity& newEntity, unsigned delay) {
 
 void Lair::tick() {
     ticks++;
+    if (queue.empty()) {
+        return;
+    }
     if (queue[currentIndex].second == ticks) {
         queue[currentIndex].first.spawn(pathToCastle);
+        newEntity = &queue[currentIndex].first;
         currentIndex++;
     }
 }
+
+
 
 void Lair::setPath(Path newPath) {
     pathToCastle = std::move(newPath);
@@ -40,4 +47,13 @@ void Lair::setPath(Path newPath) {
 
 const LairQueue &Lair::getQueue() const {
     return queue;
+}
+
+Entity *Lair::getNewEntity() {
+    if (newEntity != nullptr) {
+        auto copy = newEntity;
+        newEntity = nullptr;
+        return copy;
+    }
+    return nullptr;
 }
