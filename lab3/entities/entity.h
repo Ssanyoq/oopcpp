@@ -13,24 +13,29 @@ class Entity : public Sprite {
 protected:
     unsigned level;
     unsigned hp;
+
     double damagePerTick;
     bool isSpawned = false;
     double speed; // tiles per tick
     double tilesPassed{};
-    std::vector<Effect> activeEffects;
+    std::vector<Effect> activeEffects{};
     unsigned deathCost;
     bool atCastle = false;
-    Path path;
+    Path path{};
     unsigned positionAtPath = -1;
+    unsigned maxHp;
 
     virtual bool isImmuneTo(const Effect &effect) { return false;};
 public:
-    explicit Entity(unsigned int hp = 100, int dpt = 100, unsigned int speed = 1, unsigned int deathCost = 10,
+
+    explicit Entity(unsigned int hp = 100, int dpt = 1, double speed = 0.1, unsigned int deathCost = 10,
                     unsigned int level = 0) : Sprite(-1, -1, 0),
-                                    level(level), hp(hp), damagePerTick(dpt), speed(speed),
-                                    deathCost(deathCost) {};
+                                              level(level), hp(hp), damagePerTick(dpt), speed(speed),
+                                              deathCost(deathCost), maxHp(hp) {};
 
     unsigned getDeathCost() const {return deathCost;};
+
+    int getMaxHp() const {return maxHp;};
 
     void move(Castle &castle);
 
@@ -45,6 +50,10 @@ public:
     unsigned getHPAmount() const;
 
     bool isAlive() const;
+
+    bool isAtCastle() const {return atCastle;};
+
+    void dealDamage(Castle *castle) const {castle->receiveDamage(damagePerTick);};
 
     friend class Effect;
 };

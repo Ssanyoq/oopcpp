@@ -36,9 +36,12 @@ void Entity::move(Castle &castle) {
         }
         position = path[positionAtPath];
         return;
+    } else {
+        atCastle = true;
+        deathCost = 0;
     }
-    deathCost = 0;
-    castle.receiveDamage((int)damagePerTick);
+
+//    castle.receiveDamage((int)damagePerTick);
 
 }
 
