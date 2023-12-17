@@ -103,6 +103,9 @@ vector<vector<int>> getDistances(vector<vector<TileType>> map, const Coordinates
 
 vector<std::pair<int, int>> splitRange(unsigned int size, unsigned int parts) {
     vector<std::pair<int, int>> out;
+    if (parts >= size) {
+        parts = size;
+    }
     out.reserve(parts);
     for (int i = 0; i < parts; i++) {
         out.emplace_back(i * (size / parts), (i + 1) * (size / parts) - 1);

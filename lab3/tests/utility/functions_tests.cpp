@@ -47,7 +47,23 @@ TEST_CASE("Path finding") {
 TEST_CASE("Splitting") {
     REQUIRE(splitRange(10, 1) == vector<std::pair<int, int>>({{0, 9}}));
 
-    REQUIRE(splitRange(10, 2) == vector<std::pair<int, int>>({{0, 4}, {5, 9}}));
+    REQUIRE(splitRange(10, 2) == vector<std::pair<int, int>>({{0, 4},
+                                                              {5, 9}}));
 
-    REQUIRE(splitRange(10, 3) == vector<std::pair<int, int>>({{0, 2}, {3, 5}, {6, 9}})); // last one is bigger
+    REQUIRE(splitRange(10, 3) == vector<std::pair<int, int>>({{0, 2},
+                                                              {3, 5},
+                                                              {6, 9}})); // last one is bigger
+
+    REQUIRE(splitRange(1, 3) == vector<std::pair<int, int>>({{0, 0}}));
+
+    REQUIRE(splitRange(10, 100) == vector<std::pair<int, int>>({{0, 0},
+                                                                {1, 1},
+                                                                {2, 2},
+                                                                {3, 3},
+                                                                {4, 4},
+                                                                {5, 5},
+                                                                {6, 6},
+                                                                {7, 7},
+                                                                {8, 8},
+                                                                {9, 9}}));
 }
