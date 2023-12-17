@@ -6,9 +6,10 @@
 
 Game::Game() = default;
 
-void Game::addEntity(Entity& newEntity) {
+void Game::addEntity(Entity &newEntity) {
     entities.push_back(newEntity);
 }
+
 void Game::addDefence(Defence *newDefence) {
     auto tile = currentMap.getTile(newDefence->getPos());
     if (tile->getContents() == nullptr) {
@@ -35,37 +36,81 @@ void Game::deletePlaceable(int index) {
 }
 
 
-void Game::moveEntities() {
-    for (int i = 0; i < entities.size(); i++) {
+void Game::moveEntities(int iterStart, int iterEnd) {
+    if (iterEnd == -1 || iterEnd >= entities.size()) {
+        iterEnd = entities.size() - 1;
+    }
+    for (int i = iterStart; i <= iterEnd; i++) {
         if (!entities[i].isAlive()) {
             deleteEntity(i);
         }
         entities[i].move(currentMap.getCastle());
+        if (entities[i].isAlive() and entities[i].isAtCastle()) {
+            entities[i].dealDamage(
+                    dynamic_cast<Castle *>(currentMap.getTile(currentMap.getCastleCoords())->getContents()));
+        }
     }
 }
-void Game::usePlaceables() {
-    for (auto & placeable : placeables) {
-        placeable->doAction();
+
+void Game::usePlaceables(int iterStart, int iterEnd) {
+    if (iterEnd == -1 || iterEnd >= placeables.size()) {
+        iterEnd = placeables.size() - 1;
+    }
+    for (int i = iterStart; i <= iterEnd; i++) {
+        placeables[i]->doAction(entities);
     }
 }
 
 void Game::process() {
+//  std::thread::hardware_concurrency() == 8 for Apple M1
+    auto partsIndices = splitRange(placeables.size(), THREADS_TO_USE);
+    vector<std::thread> threads;
+    threads.reserve(partsIndices.size());
+    for (int i = 0; i < partsIndices.size(); i++) {
+        threads.emplace_back(&Game::usePlaceables, this, partsIndices[i].first, partsIndices[i].second);
+    }
+    for (int i = 0; i < partsIndices.size(); i++) {
+        threads[i].join();
+    }
     usePlaceables();
-    moveEntities();
 
+    // Add entities from lairs to processing queue
+    auto newEntities = currentMap.getNewEntities();
+    if (!newEntities.empty()) {
+        entities.insert(entities.end(), newEntities.begin(), newEntities.end());
+    }
+
+    partsIndices = splitRange(entities.size(), THREADS_TO_USE);
+    vector<std::thread> entityThreads;
+    entityThreads.reserve(partsIndices.size());
+
+    for (int i = 0; i < partsIndices.size(); i++) {
+        entityThreads.emplace_back(&Game::moveEntities, this, partsIndices[i].first, partsIndices[i].second);
+    }
+    for (int i = 0; i < partsIndices.size(); i++) {
+        entityThreads[i].join();
+    }
+    moveEntities(0, -1);
 }
 
 
-Map & Game::getCurrentMap() {
+Map &Game::getCurrentMap() {
     return currentMap;
 }
 
 
-
 void Game::changeMap(Map newMap) {
-    currentMap = std::move(newMap);
     entities = {};
     placeables = {};
+    currentMap = std::move(newMap);
+    for (int y = 0; y < currentMap.getHeight(); y++) {
+        for (int x = 0; x < currentMap.getWidth(); x++) {
+            auto contents = currentMap.getTile(x, y)->getContents();
+            if (contents != nullptr) {
+                placeables.emplace_back(contents);
+            }
+        }
+    }
 }
 
 
