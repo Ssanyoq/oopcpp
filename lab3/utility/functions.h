@@ -25,4 +25,6 @@ vector<vector<int>> getDistances(vector<vector<TileType>> map, const Coordinates
 
 Path getPath(const vector<vector<int>>& distances, Coordinates from);
 
+vector<std::pair<int, int>> splitRange(unsigned size, unsigned parts);
+
 #endif //LAB3_FUNCTIONS_H

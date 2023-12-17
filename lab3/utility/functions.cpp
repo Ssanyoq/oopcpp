@@ -23,7 +23,7 @@ Path getPath(const vector<vector<int>> &distances, Coordinates from) {
     auto curCoords = from;
     path.push_back(from);
 
-    while (curNum != 0) {
+    while (curNum > 0) {
         int minDist = -1;
         Coordinates minCoords;
         for (int i = 0; i < 4; i++) {
@@ -99,4 +99,16 @@ vector<vector<int>> getDistances(vector<vector<TileType>> map, const Coordinates
     }
 
     return distances;
+}
+
+vector<std::pair<int, int>> splitRange(unsigned int size, unsigned int parts) {
+    vector<std::pair<int, int>> out;
+    out.reserve(parts);
+    for (int i = 0; i < parts; i++) {
+        out.emplace_back(i * (size / parts), (i + 1) * (size / parts) - 1);
+    }
+    if (out[parts - 1].second != size - 1) {
+        out[parts - 1].second = size - 1;
+    }
+    return out;
 }
