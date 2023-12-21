@@ -2,7 +2,7 @@
 #include "../utility/warning.h"
 
 
-Map::Map(Matrix<TileType> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos) :
+Map::Map(Matrix<TileType> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos) : castlePos(castleCoords),
         castle(100, castleCoords.x, castleCoords.y), tiles(map.getWidth(),
                                                            map.getHeight(),
                                                            Tile(Coordinates{.x=-1, .y=-1}, Forest))
@@ -119,4 +119,15 @@ Tile *Map::getTile(int x, int y) {
 
 Tile * Map::getTile(Coordinates coordinates) {
     return getTile(coordinates.x, coordinates.y);
+}
+
+vector<Entity> Map::getNewEntities() {
+    vector<Entity> newEntities;
+    for (int i = 0; i < lairs.size(); i++) {
+        auto entity = dynamic_cast<Lair *>(getTile(lairs[i])->getContents())->getNewEntity();
+        if (entity != nullptr) {
+            newEntities.push_back(*entity);
+        }
+    }
+    return newEntities;
 }

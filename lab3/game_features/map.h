@@ -38,7 +38,7 @@ public:
 
     Coordinates getCastleCoords() const {return castlePos;};
 
-    Castle &getCastle() {return castle;};
+    Castle &getCastle() {return *dynamic_cast<Castle *>(getTile(castlePos.x, castlePos.y)->getContents());};
 
     void printMap() const;
 
@@ -52,6 +52,8 @@ public:
 
     Tile *getTile(int x, int y);
     Tile *getTile(Coordinates coordinates);
+
+    vector<Entity >getNewEntities();
 };
 
 #endif //OOPCPP_MAP_H
