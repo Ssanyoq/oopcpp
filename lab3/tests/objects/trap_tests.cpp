@@ -9,6 +9,9 @@ TEST_CASE("Trap Functionality") {
                 Entity(3, 3),
                 Entity(2, 2),
         };
+        for (int i = 0; i < 3; i++) {
+            entities[i].setPos({i, i});
+        }
 
         trap.dealEffect(entities);
         entities[0].useEffects();
