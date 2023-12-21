@@ -21,7 +21,7 @@ public:
 
     Coordinates getPos() const { return position; };
 
-    Coordinates setPos(Coordinates newPosition);
+    void setPos(Coordinates newPosition);
 
     short getRotationDegree() const { return rotationDegree; }
 
