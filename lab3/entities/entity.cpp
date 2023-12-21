@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "../utility/functions.h"
 
 #include <utility>
 
@@ -35,11 +36,16 @@ void Entity::move(Castle &castle) {
             positionAtPath = path.size() - 1;
         }
         position = path[positionAtPath];
-        return;
+        if (positionAtPath == 0) {
+            rotationDegree = calculateAngle(path[positionAtPath], path[positionAtPath + 1]);
+        } else {
+            rotationDegree = calculateAngle(path[positionAtPath - 1], position);
+        }
     } else {
         atCastle = true;
         deathCost = 0;
     }
+    useEffects();
 
 //    castle.receiveDamage((int)damagePerTick);
 
