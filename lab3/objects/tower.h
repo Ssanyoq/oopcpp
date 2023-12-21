@@ -11,13 +11,17 @@ class Tower : public Defence {
 protected:
     int damagePerShot;
     AttackStrategy strategy;
+    int cooldown = 0;
+    unsigned cooldownDuration = 10;
 public:
-    void shoot(std::vector<Entity> &entities); //
+    void shoot(std::vector<Entity> &entities);
     void setStrategy(AttackStrategy strategy);
     void doAction(std::vector<Entity> &entities) override;
 
-    Tower(ll x, ll y, int dps = 100, AttackStrategy strat = ClosestToSelf, int range=10) :
-            Defence(x, y, 0, 10),
+    ObjectType getType() const override; // TODO
+
+    Tower(ll x, ll y, int dps=100, AttackStrategy strat = ClosestToSelf, int range=5) :
+            Defence(x, y, 0, range),
             damagePerShot(dps), strategy(strat) {}
 };
 
