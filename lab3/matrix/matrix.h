@@ -147,7 +147,6 @@ public:
             if (i % (width + n) < n) {
                 newData[i] = filler;
             } else {
-                cout << "Copied at i = " << i << std::endl;
                 newData[i] = data[i - (i / (width + n) + 1) * n];
             }
         }
@@ -164,13 +163,34 @@ public:
             if (i % (width + n) >= width) {
                 newData[i] = filler;
             } else {
-                cout << "Copied at i = " << i << std::endl;
                 newData[i] = data[i - (i / (width + n)) * n];
             }
         }
         width += n;
         delete data;
         data = newData;
+    }
+    void setElement(Coordinates target, T value) {
+        this->operator[](target.y)[target.x] = value;
+    }
+
+    void fillLine(Coordinates from, Coordinates to, T filler) {
+        auto current = from;
+        setElement(current, filler);
+        while (current.x != to.x || current.y != to.y) {
+            if (current.x < to.x) {
+                current.x++;
+            } else if (current.x > to.x) {
+                current.x--;
+            }
+            if (current.y < to.y) {
+                current.y++;
+            } else if (current.y > to.y) {
+                current.y--;
+            }
+            setElement(current, filler);
+        }
+        setElement(current, filler);
     }
 
 
