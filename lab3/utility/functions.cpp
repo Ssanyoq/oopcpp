@@ -11,8 +11,8 @@ double getDistance(const Sprite &first, const Sprite &second) {
     return getDistance(first.getPos(), second.getPos());
 }
 
-double calculateAngle(const Coordinates &from, const Coordinates &to) {
-    return atan2(to.y - from.y, to.x - from.x);
+double calculateAngle(const Coordinates from, const Coordinates to) {
+    return atan2(to.y - from.y, to.x - from.x) * (180 / M_PI);
 }
 
 Path getPath(const vector<vector<int>> &distances, Coordinates from) {
@@ -103,6 +103,9 @@ vector<vector<int>> getDistances(vector<vector<TileType>> map, const Coordinates
 
 vector<std::pair<int, int>> splitRange(unsigned int size, unsigned int parts) {
     vector<std::pair<int, int>> out;
+    if (size == 0 || parts == 0) {
+        return out;
+    }
     if (parts >= size) {
         parts = size;
     }

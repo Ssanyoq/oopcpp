@@ -18,7 +18,7 @@ double getDistance(const Coordinates &first, const Coordinates &second);
 
 double getDistance(const Sprite &first, const Sprite &second);
 
-double calculateAngle(const Coordinates &from, const Coordinates &to);
+double calculateAngle(Coordinates from, Coordinates to);
 
 
 vector<vector<int>> getDistances(vector<vector<TileType>> map, const Coordinates &from);
