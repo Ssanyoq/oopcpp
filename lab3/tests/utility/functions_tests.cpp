@@ -66,4 +66,6 @@ TEST_CASE("Splitting") {
                                                                 {7, 7},
                                                                 {8, 8},
                                                                 {9, 9}}));
+
+    REQUIRE(splitRange(0, 0).empty());
 }
