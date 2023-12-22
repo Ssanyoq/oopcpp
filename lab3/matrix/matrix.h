@@ -111,8 +111,13 @@ public:
         return height;
     }
 
-    void addToBottom(unsigned n, T filler=T()) {
-
+    void addToBottom(unsigned n, T filler=T())
+    /**
+     * Method that adds n rows to bottom filled with filler
+     * @param n unsigned number - amount of rows to be added
+     * @param filler object of class T - what to put
+     */
+    {
         auto newData = new T[width * (height + n)];
         for (int i = 0; i < width * height; i++) {
             newData[i] = data[i];
@@ -125,8 +130,13 @@ public:
         delete data;
         data = newData;
     }
-    void addToTop(unsigned n, T filler=T()) {
-
+    void addToTop(unsigned n, T filler=T())
+    /**
+     * Method that adds n rows to top filled with filler
+     * @param n unsigned number - amount of rows to be added
+     * @param filler object of class T - what to put
+     */
+    {
         auto newData = new T[width * (height + n)];
         for (int i = 0; i < width * n; i++) {
             newData[i] = filler;
@@ -139,8 +149,13 @@ public:
         data = newData;
     }
 
-    void addToLeft(unsigned n, T filler=T()) {
-
+    void addToLeft(unsigned n, T filler=T())
+    /**
+     * Method that adds n columns to the left filled with filler
+     * @param n unsigned number - amount of rows to be added
+     * @param filler object of class T - what to put
+     */
+    {
         auto newData = new T[(width + n) * height];
 
         for (int i = 0; i < (width + n) * height; i++) {
@@ -155,8 +170,13 @@ public:
         data = newData;
     }
 
-    void addToRight(unsigned n, T filler=T()) {
-
+    void addToRight(unsigned n, T filler=T())
+    /**
+     * Method that adds n columns to the right filled with filler
+     * @param n unsigned number - amount of rows to be added
+     * @param filler object of class T - what to put
+     */
+    {
         auto newData = new T[(width + n) * height];
 
         for (int i = 0; i < (width + n) * height; i++) {
@@ -170,11 +190,22 @@ public:
         delete data;
         data = newData;
     }
-    void setElement(Coordinates target, T value) {
+    void setElement(Coordinates target, T value)
+    /**
+     * Method that changes value of item by coordinates.
+     * Analog for matrix[target.y][target.x] = value
+     * @param target coordinates of item to be changed
+     * @param value value to assign
+     */
+    {
         this->operator[](target.y)[target.x] = value;
     }
 
-    void fillLine(Coordinates from, Coordinates to, T filler) {
+    void fillLine(Coordinates from, Coordinates to, T filler)
+    /**
+     * Fills line between 2 coordinates with new value
+     */
+    {
         auto current = from;
         setElement(current, filler);
         while (current.x != to.x || current.y != to.y) {
