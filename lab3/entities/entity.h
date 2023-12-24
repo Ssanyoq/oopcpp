@@ -28,7 +28,7 @@ protected:
     virtual bool isImmuneTo(const Effect &effect) { return false;};
 public:
 
-    explicit Entity(unsigned int hp = 100, int dpt = 1, double speed = 0.1, unsigned int deathCost = 10,
+    explicit Entity(unsigned int hp = 10, int dpt = 1, double speed = 0.05, unsigned int deathCost = 10,
                     unsigned int level = 0) : Sprite(-1, -1, 0),
                                               level(level), hp(hp), damagePerTick(dpt), speed(speed),
                                               deathCost(deathCost), maxHp(hp) {};
