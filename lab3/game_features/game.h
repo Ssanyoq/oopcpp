@@ -12,14 +12,21 @@
 
 class Game {
 protected:
+    Map currentMap = Map(Matrix<TileType>({{Road}}), {.x = 0, .y = 0}, {});
+    unsigned coins = 10;
+
     void moveEntities(int iterStart, int iterEnd);
     void usePlaceables(int iterStart=0, int iterEnd=-1);
-    Map currentMap = Map(Matrix<TileType>({{Road}}), {.x = 0, .y = 0}, {});
+
     void deleteEntity(int index);
     void deletePlaceable(int index);
 public:
+    bool isOver();
+
     void addEntity( Entity& newEntity);
     void addDefence( Defence *newDefence);
+
+    unsigned getCoinsAmount() const {return coins;};
 
     Map & getCurrentMap();
 
