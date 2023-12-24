@@ -12,11 +12,12 @@ void Game::addEntity(Entity &newEntity) {
 
 void Game::addDefence(Defence *newDefence) {
     auto tile = currentMap.getTile(newDefence->getPos());
-    if (tile->getContents() == nullptr) {
+    if ((tile->getContents() == nullptr) && (newDefence->isPlaceableOn(tile->getType()))) {
         tile->setContents((Placeable *) newDefence);
         placeables.push_back(newDefence);
     } else {
         warn("Can't place defence here!");
+        delete newDefence;
     }
 }
 
@@ -42,6 +43,7 @@ void Game::moveEntities(int iterStart, int iterEnd) {
     }
     for (int i = iterStart; i <= iterEnd; i++) {
         if (!entities[i].isAlive()) {
+            coins += entities[i].getDeathCost();
             deleteEntity(i);
         }
         entities[i].move(currentMap.getCastle());
@@ -111,6 +113,10 @@ void Game::changeMap(Map newMap) {
             }
         }
     }
+}
+
+bool Game::isOver() {
+    return currentMap.getCastle().isDead();
 }
 
 
