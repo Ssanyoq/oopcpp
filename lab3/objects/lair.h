@@ -41,8 +41,10 @@ public:
     Path getPath() const { return pathToCastle;}
     const LairQueue &getQueue() const;
     ObjectType getType() const override {return Spawn;};
+    void generateQueue(Entity filler, unsigned number, unsigned delay);
 
     Entity *getNewEntity();
+
 
 };
 

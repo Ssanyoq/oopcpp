@@ -57,3 +57,7 @@ Entity *Lair::getNewEntity() {
     }
     return nullptr;
 }
+
+void Lair::generateQueue(Entity filler, unsigned amount, unsigned int delay) {
+    resetQueue(LairQueue(amount, {filler, delay}));
+}
