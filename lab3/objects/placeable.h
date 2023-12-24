@@ -8,6 +8,7 @@ enum ObjectType { // TODO
     Turret,
     Spawn,
     Other,
+    Danger
 };
 class Entity;
 

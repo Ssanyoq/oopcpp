@@ -4,6 +4,7 @@
 #include "defence.h"
 #include "effect.h"
 #include "tower_strategies.h"
+#include "tile_type.h"
 
 class Entity;
 
@@ -17,12 +18,16 @@ public:
     void shoot(std::vector<Entity> &entities);
     void setStrategy(AttackStrategy strategy);
     void doAction(std::vector<Entity> &entities) override;
+    static unsigned getPrice() {return 35;};
+
+    bool isPlaceableOn(TileType tileType) const override {return (tileType == Field);};
 
     ObjectType getType() const override; // TODO
 
-    Tower(ll x, ll y, int dps=100, AttackStrategy strat = ClosestToSelf, int range=5) :
+
+    Tower(ll x, ll y, int dps=1, AttackStrategy strat = ClosestToSelf, int range=5) :
             Defence(x, y, 0, range),
-            damagePerShot(dps), strategy(strat) {}
+            damagePerShot(dps), strategy(strat) {};
 };
 
 //class MagicTower: public Tower {

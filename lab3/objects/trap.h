@@ -20,11 +20,13 @@ public:
 
     void dealEffect(std::vector<Entity> &entities);
 
-//    bool isActive() const {return (cooldown == 0);};
-
     void doAction(std::vector<Entity> &entities) override;
 
+    bool isPlaceableOn(TileType tileType) const override {return (tileType == Road);};
+
     bool isActive() const { return (cooldown == 0);};
+
+    static unsigned getPrice() {return 15;};
 
     ObjectType getType() const override;
 
