@@ -12,21 +12,21 @@ protected:
     Effect effect;
     unsigned cooldown = 0;
 public:
-    Trap(EffectType effect, ll x = 0, ll y = 0, short rotation = 0,
-    unsigned int effectDuration = 100
+    Trap(EffectType effect = Poison, ll x = -1, ll y = -1, short rotation = 0,
+         unsigned int effectDuration = 100
     ) :
             Defence(x, y, rotation, 10),
-    effect(effect, effectDuration) {}
+            effect(effect, effectDuration) {}
 
     void dealEffect(std::vector<Entity> &entities);
 
     void doAction(std::vector<Entity> &entities) override;
 
-    bool isPlaceableOn(TileType tileType) const override {return (tileType == Road);};
+    bool isPlaceableOn(TileType tileType) const override { return (tileType == Road); };
 
-    bool isActive() const { return (cooldown == 0);};
+    bool isActive() const { return (cooldown == 0); };
 
-    static unsigned getPrice() {return 15;};
+    unsigned getPrice() const override { return 15; };
 
     ObjectType getType() const override;
 
