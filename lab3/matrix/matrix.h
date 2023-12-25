@@ -1,8 +1,7 @@
 #ifndef LAB3_MATRIX_H
 #define LAB3_MATRIX_H
 
-#include "../utility/coords.h"
-#include <vector>
+#include "matrix_iterator.h"
 
 
 
@@ -18,6 +17,16 @@ private:
     T *data;
 
 public:
+    using iterator = MatrixIterator<T>;
+
+    iterator begin() const {
+        return iterator(*this, 0, 0);
+    }
+
+    iterator end() const {
+        return iterator(*this, getHeight(), 0);
+    }
+
     size_t getWidth() const
     /**
      * @returns width of matrix
