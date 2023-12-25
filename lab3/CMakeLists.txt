@@ -3,6 +3,8 @@ project(lab3)
 
 set(CMAKE_CXX_STANDARD 14)
 
+find_package(Threads REQUIRED)
+link_libraries(Threads::Threads)
 
 include_directories(effects)
 include_directories(entities)
@@ -15,6 +17,7 @@ file(GLOB effects_src "effects/*")
 file(GLOB objects_src "objects/*")
 file(GLOB entities_src "entities/*")
 file(GLOB util_src "utility/*")
+
 
 add_library(game_features
         game_features/game.cpp
@@ -42,11 +45,25 @@ add_library(objects
         objects/trap.cpp
         objects/trap.h
         objects/sprite.cpp
+        objects/tile.cpp
+#        objects/magic_tower.h
+#        objects/magic_tower.cpp
 )
+
+include_directories(towers/)
+
+add_library(magic_tower SHARED towers/magic_tower.cpp)
+
+set_property(TARGET magic_tower PROPERTY POSITION_INDEPENDENT_CODE_ON)
+
+set_target_properties(magic_tower PROPERTIES IMPORTED_LOCATION libmagic_tower.so)
+
 
 add_library(entities
         entities/entity.h
         entities/entity.cpp)
+
+target_link_libraries(magic_tower entities effects utility)
 
 target_link_libraries(entities objects)
 target_link_libraries(entities effects)
@@ -66,6 +83,12 @@ add_library(utility
         matrix/matrix_iterator.h
 )
 
+add_library(visuals
+            visuals/design.cpp
+            visuals/design.h
+            visuals/game_visuals.cpp
+            visuals/game_visuals.h
+        visuals/design.h)
 
 add_executable(lab3
         #        effects/effect.h
@@ -93,12 +116,18 @@ add_executable(lab3
 
 find_package(SFML 2.6.1 COMPONENTS graphics audio  REQUIRED)
 
+target_link_libraries(visuals sfml-graphics)
+
 target_link_libraries(lab3
         game_features
         effects
         objects
         entities
         utility
+#        magic_tower
+
+        visuals
+
         sfml-graphics
         sfml-window
         sfml-system
