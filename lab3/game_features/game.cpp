@@ -10,16 +10,21 @@ void Game::addEntity(Entity &newEntity) {
     entities.push_back(newEntity);
 }
 
-void Game::addDefence(Defence *newDefence) {
+void Game::addDefence(Defence *newDefence, bool isFree) {
     auto tile = currentMap.getTile(newDefence->getPos());
-    if ((tile->getContents() == nullptr) && (newDefence->isPlaceableOn(tile->getType()))) {
+    if ((tile->getContents() == nullptr) && (newDefence->isPlaceableOn(tile->getType())) && (isFree || coins >= newDefence->getPrice())) {
         tile->setContents((Placeable *) newDefence);
         placeables.push_back(newDefence);
+        if (!isFree) {
+            coins -= newDefence->getPrice();
+        }
     } else {
         warn("Can't place defence here!");
         delete newDefence;
+        newDefence = nullptr;
     }
 }
+
 
 void Game::deleteEntity(int index) {
     if (index < 0 or index > entities.size() - 1) {
@@ -38,18 +43,19 @@ void Game::deletePlaceable(int index) {
 
 
 void Game::moveEntities(int iterStart, int iterEnd) {
+    static std::mutex lock;
     if (iterEnd == -1 || iterEnd >= entities.size()) {
         iterEnd = entities.size() - 1;
     }
     for (int i = iterStart; i <= iterEnd; i++) {
-        if (!entities[i].isAlive()) {
-            coins += entities[i].getDeathCost();
-            deleteEntity(i);
-        }
+
         entities[i].move(currentMap.getCastle());
         if (entities[i].isAlive() and entities[i].isAtCastle()) {
+
+            lock.lock();
             entities[i].dealDamage(
                     dynamic_cast<Castle *>(currentMap.getTile(currentMap.getCastleCoords())->getContents()));
+            lock.unlock();
         }
     }
 }
@@ -74,7 +80,7 @@ void Game::process() {
     for (int i = 0; i < partsIndices.size(); i++) {
         threads[i].join();
     }
-    usePlaceables();
+//    usePlaceables();
 
     // Add entities from lairs to processing queue
     auto newEntities = currentMap.getNewEntities();
@@ -92,7 +98,13 @@ void Game::process() {
     for (int i = 0; i < partsIndices.size(); i++) {
         entityThreads[i].join();
     }
-    moveEntities(0, -1);
+    for (int i = 0; i < entities.size(); i++) {
+        if (!entities[i].isAlive()) {
+            coins += entities[i].getDeathCost();
+            deleteEntity(i);
+        }
+    }
+//    moveEntities(0, -1);
 }
 
 
@@ -118,5 +130,4 @@ void Game::changeMap(Map newMap) {
 bool Game::isOver() {
     return currentMap.getCastle().isDead();
 }
-
 

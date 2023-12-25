@@ -13,7 +13,7 @@
 class Game {
 protected:
     Map currentMap = Map(Matrix<TileType>({{Road}}), {.x = 0, .y = 0}, {});
-    unsigned coins = 10;
+    unsigned coins = 50;
 
     void moveEntities(int iterStart, int iterEnd);
     void usePlaceables(int iterStart=0, int iterEnd=-1);
@@ -24,7 +24,7 @@ public:
     bool isOver();
 
     void addEntity( Entity& newEntity);
-    void addDefence( Defence *newDefence);
+    void addDefence(Defence *newDefence, bool isFree=true);
 
     unsigned getCoinsAmount() const {return coins;};
 
