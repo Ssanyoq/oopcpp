@@ -3,7 +3,7 @@
 
 
 Map::Map(Matrix<TileType> map, Coordinates castleCoords, const vector<Coordinates>& lairsPos) : castlePos(castleCoords),
-        castle(100, castleCoords.x, castleCoords.y), tiles(map.getWidth(),
+        castle(500, castleCoords.x, castleCoords.y), tiles(map.getWidth(),
                                                            map.getHeight(),
                                                            Tile(Coordinates{.x=-1, .y=-1}, Forest))
     {
