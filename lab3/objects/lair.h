@@ -9,8 +9,10 @@
 class Entity; // TODO
 class Game;
 
-typedef std::vector<std::pair<Entity, unsigned>> LairQueue;
 using std::vector;
+using std::pair;
+
+typedef vector<pair<Entity, unsigned>> LairQueue;
 
 //template <typename T>
 //LairQueue generateQueue(unsigned amount, unsigned delay, unsigned delayFromStart=0) {
@@ -41,7 +43,7 @@ public:
     Path getPath() const { return pathToCastle;}
     const LairQueue &getQueue() const;
     ObjectType getType() const override {return Spawn;};
-    void generateQueue(Entity filler, unsigned number, unsigned delay);
+    void generateQueue(const Entity &filler, unsigned number, unsigned delay, unsigned increment);
 
     Entity *getNewEntity();
 
