@@ -58,6 +58,15 @@ Entity *Lair::getNewEntity() {
     return nullptr;
 }
 
-void Lair::generateQueue(Entity filler, unsigned amount, unsigned int delay) {
-    resetQueue(LairQueue(amount, {filler, delay}));
+void Lair::generateQueue(const Entity &filler, unsigned amount, unsigned delay, unsigned increment) {
+    const auto defaultHP = filler.getMaxHp();
+    if (increment == 0) {
+        resetQueue(LairQueue(amount, {filler, delay}));
+        return;
+    }
+    LairQueue newQueue(amount);
+    for (int i = 0; i < amount; i++) {
+        newQueue[i] = {Entity(defaultHP + increment * i), delay};
+    }
+    resetQueue(newQueue);
 }
