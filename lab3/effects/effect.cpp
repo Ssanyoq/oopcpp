@@ -12,10 +12,10 @@ std::unordered_map<EntityStats, double> Effect::dealEffect() {
     switch (effectType) {
         case Slowness:
             if (isFresh) {
-                coefs[Speed] = 0.5;
+                coefs[Speed] = 0.4;
             }
             if (ticksLeft == 0) {
-                coefs[Speed] = 2;
+                coefs[Speed] = 1 / 0.4;
             }
             break;
         case Fatigue:
