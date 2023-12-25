@@ -25,8 +25,8 @@ TEST_CASE("Game testing") {
     game.addEntity(entity);
 
     auto defence = new Tower(0, 0, 10);
-    game.addDefence(defence);
+    game.addDefence(defence, true);
     auto trap = new Trap(Poison);
-    game.addDefence(trap);
+    game.addDefence(trap, true);
     game.process();
 }

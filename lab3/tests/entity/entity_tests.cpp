@@ -3,7 +3,7 @@
 
 TEST_CASE("Entity Initialization and Basic Functionality") {
     SECTION("Default Constructor") {
-        Entity entity;
+        Entity entity(100);
         REQUIRE(entity.isAlive());
         REQUIRE(entity.getHPAmount() == 100);
     }

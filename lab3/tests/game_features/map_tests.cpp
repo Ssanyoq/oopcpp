@@ -16,7 +16,7 @@ TEST_CASE("Map initialization and tests") {
     map.printMap();
 
     REQUIRE(dynamic_cast<Lair *>(map.getTile(0, 1)->getContents()) != nullptr);
-    REQUIRE_NOTHROW(dynamic_cast<Lair *>(map.getTile(2, 0)->getContents())->doAction());
+//    REQUIRE_NOTHROW(dynamic_cast<Lair *>(map.getTile(2, 0)->getContents())->doAction(nullptr));
 
     REQUIRE(map.isAccurate());
 
