@@ -109,7 +109,7 @@ add_executable(lab3
 )
 
 # Specify the include directories
-#target_include_directories(lab3 PRIVATE /opt/homebrew/Cellar/sfml/2.6.1/include)
+#target_include_directories(3 PRIVATE /opt/homebrew/Cellar/sfml/2.6.1/include)
 
 # Specify the library directories
 #link_directories(/opt/homebrew/Cellar/sfml/2.6.1/lib)
@@ -141,7 +141,7 @@ target_link_libraries(lab3
 
 
 # Specify the libraries to link against using keyword syntax
-#target_link_libraries(lab3 PRIVATE )
+#target_link_libraries(3 PRIVATE )
 
 add_library(catch2
         tests/catch2/catch_amalgamated.hpp

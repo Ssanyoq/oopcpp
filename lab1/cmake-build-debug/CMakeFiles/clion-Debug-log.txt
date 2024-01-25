@@ -1,1 +1,0 @@
-CMakeLists.txt not found in /Users/ssanyoq/MEOW/2023f/oopcpp/lab1 Select CMakeLists.txt

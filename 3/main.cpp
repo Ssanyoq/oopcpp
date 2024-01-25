@@ -17,29 +17,29 @@ sf::Texture road, field, forrest, castle, towerBase, towerWeapon, zombie, lair,
 
 void loadTextures() {
     coin.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile272.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile272.png");
     forrest.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile024.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile024.png");
     field.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile050.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile050.png");
     road.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile159.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile159.png");
     castle.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile183.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile183.png");
     castle.setSmooth(true);
     towerBase.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile181.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile181.png");
     towerWeapon.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile204.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile204.png");
     towerWeapon.setSmooth(true);
     zombie.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile248.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile248.png");
     lair.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile269.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile269.png");
     armedTrap.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile131.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile131.png");
     disarmedTrap.loadFromFile(
-            "/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/textures/td_minimalist/towerDefense_tile021.png");
+            "/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/textures/td_minimalist/towerDefense_tile021.png");
 
 }
 
@@ -261,7 +261,7 @@ int main() {
     Game gameLogics;
     Matrix<sf::RectangleShape> tiles({{sf::RectangleShape({0, 0})}});
     Matrix<TileType> matrix(20, 8, Field);
-    SVFont.loadFromFile("/Users/ssanyoq/MEOW/2023f/oopcpp/lab3/game_files/fonts/Stardew_Valley.ttf");
+    SVFont.loadFromFile("/Users/ssanyoq/MEOW/2023f/oopcpp/3/game_files/fonts/Stardew_Valley.ttf");
 
 //    Matrix<TileType> matrix(map);
     matrix.addToBottom(1, Field);
